@@ -3,11 +3,22 @@ const Schema = mongoose.Schema;
 
 const wishlistSchema = new Schema(
   {
-    name: {
+    link: {
       type: String,
       required: true,
-      minlength: 3,
+    },
+    name: {
+      type: String,
+      required: false,
       unique: true,
+    },
+    priceOld: {
+      type: Number,
+      required: false,
+    },
+    priceNew: {
+      type: Number,
+      required: false,
     },
   },
   {
