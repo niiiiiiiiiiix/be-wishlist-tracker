@@ -11,6 +11,8 @@ const puppeteer = require("puppeteer");
 //   console.log(wishlistItem);
 //   res.status(201).json(wishlistItem);
 // });
+// let test = moment().format("DD MMM YYYY, h:mm A").toUpperCase();
+// console.log(test);
 
 router.post("/", async (req, res, next) => {
   let browser = await puppeteer.launch();
@@ -18,8 +20,16 @@ router.post("/", async (req, res, next) => {
   let pageUrl = await Object.values(req.body);
   let finalPageUrl = pageUrl[0];
   await page.goto(finalPageUrl);
+  // let test = await page.exposeFunction("formatDate", () => {
+  //   moment().format("DD MMM YYYY, h:mm A").toUpperCase();
+  // });
+  // console.log(test);
+  // await page.exposeFunction("moment", moment);
+  await page.exposeFunction("moment", () =>
+    moment().format("DD MMM YYYY, h:mm A")
+  );
 
-  let itemDetails = await page.evaluate(() => {
+  let itemDetails = await page.evaluate(async () => {
     // let ts = Date.now();
     // let date_ob = new Date(ts);
     // let date = date_ob.getDate();
@@ -30,7 +40,10 @@ router.post("/", async (req, res, next) => {
     let productName = document.querySelector(".product-name").innerText;
     let originalPrice = document.querySelector(".price-standard").innerText;
     let salesPrice = document.querySelector(".price-sales").innerText.trim();
-    let lastUpdated = moment().format("DD MMM YYYY, h:mm A").toUpperCase();
+    let lastUpdated = await window.moment();
+    // let lastUpdated = await window.moment(timestamp).format("DD MMM YYYY");
+    // let lastUpdated = moment().format("DD MMM YYYY, h:mm A").toUpperCase();
+    // let lastUpdated = Date.now();
 
     return {
       productLink,
