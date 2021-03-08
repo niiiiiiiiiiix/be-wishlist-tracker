@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
 const jsonContent = require("../middleware/requireJSONcontent");
+const moment = require("moment");
 
 const puppeteer = require("puppeteer");
 
@@ -18,21 +19,29 @@ router.post("/", async (req, res, next) => {
   let finalPageUrl = pageUrl[0];
   await page.goto(finalPageUrl);
 
-  let data = await page.evaluate(() => {
+  let itemDetails = await page.evaluate(() => {
+    // let ts = Date.now();
+    // let date_ob = new Date(ts);
+    // let date = date_ob.getDate();
+    // let month = date_ob.getMonth() + 1;
+    // let year = date_ob.getFullYear();
+
     let productLink = window.location.href;
     let productName = document.querySelector(".product-name").innerText;
     let originalPrice = document.querySelector(".price-standard").innerText;
     let salesPrice = document.querySelector(".price-sales").innerText.trim();
+    let lastUpdated = moment().format("DD MMM YYYY, h:mm A").toUpperCase();
 
     return {
       productLink,
       productName,
       originalPrice,
       salesPrice,
+      lastUpdated,
     };
   });
 
-  const wishlistItem = await ctrl.createNewWishlistItem(data, next);
+  const wishlistItem = await ctrl.createNewWishlistItem(itemDetails, next);
   await browser.close();
   res.status(201).json(wishlistItem);
 });

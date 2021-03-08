@@ -21,6 +21,10 @@ const wishlistSchema = new Schema(
       type: String,
       required: false,
     },
+    lastUpdated: {
+      type: String,
+      required: false,
+    },
   },
   {
     collation: { locale: "en", strength: 2 },
