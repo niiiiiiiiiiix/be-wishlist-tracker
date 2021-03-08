@@ -19,6 +19,9 @@ app.get("/", (req, res) => {
 const wishlistRouter = require("./routes/wishlist.route");
 app.use("/wishlist", wishlistRouter);
 
+const scrapeRouter = require("./routes/scrape.route");
+app.use("/scrape", scrapeRouter);
+
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   res.status(err.statusCode).send(err.message);
