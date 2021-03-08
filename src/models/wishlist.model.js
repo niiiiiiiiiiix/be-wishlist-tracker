@@ -10,12 +10,12 @@ const wishlistSchema = new Schema(
     },
     productName: {
       type: String,
-      required: false,
+      required: true,
       unique: true,
     },
     originalPrice: {
       type: String,
-      required: false,
+      required: true,
     },
     salesPrice: {
       type: String,
