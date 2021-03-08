@@ -3,21 +3,22 @@ const Schema = mongoose.Schema;
 
 const wishlistSchema = new Schema(
   {
-    link: {
+    productLink: {
       type: String,
       required: true,
+      unique: true,
     },
-    name: {
+    productName: {
       type: String,
       required: false,
       unique: true,
     },
-    priceOld: {
-      type: Number,
+    originalPrice: {
+      type: String,
       required: false,
     },
-    priceNew: {
-      type: Number,
+    salesPrice: {
+      type: String,
       required: false,
     },
   },

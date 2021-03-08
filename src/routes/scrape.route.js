@@ -22,7 +22,7 @@ router.post("/", async (req, res, next) => {
   let data = await page.evaluate(() => {
     let productName = document.querySelector(".product-name").innerText;
     let originalPrice = document.querySelector(".price-standard").innerText;
-    let salesPrice = document.querySelector(".price-sales").innerText;
+    let salesPrice = document.querySelector(".price-sales").innerText.trim();
 
     return {
       productName,
