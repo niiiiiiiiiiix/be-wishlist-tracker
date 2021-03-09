@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
-const jsonContent = require("../middleware/requireJSONcontent");
-const moment = require("moment");
+// const jsonContent = require("../middleware/requireJSONcontent");
 const Wishlist = require("../models/wishlist.model");
 
 const puppeteer = require("puppeteer");
@@ -64,7 +63,7 @@ router.get("/", async (req, res, next) => {
     for (let i = 0; i < wishlistItems.length; i++) {
       let browser = await puppeteer.launch({ headless: true });
       let page = await browser.newPage();
-      let pageUrl = await wishlistItems[i].productLink;
+      let pageUrl = wishlistItems[i].productLink;
 
       await page.setRequestInterception(true);
 
@@ -129,6 +128,44 @@ router.get("/", async (req, res, next) => {
     // res.status(200);
   } catch (err) {
     next(err);
+  }
+});
+
+// router.get("/:id", async (req, res, next) => {
+//   try {
+//     const
+//   } catch (err) {
+//     next(err);
+//   }
+// })
+
+router.put("/:id", async (req, res, next) => {
+  try {
+    const wishlist = await ctrl.updateById(req.params.id, req.body, next);
+    if (wishlist === null) {
+      const error = new Error("Item does not exist");
+      error.statusCode = 400;
+      next(error);
+    } else {
+      res.status(200).json(wishlist);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const wishlist = await ctrl.deleteById(req.params.id, next);
+    if (wishlist === null) {
+      const error = new Error("Item does not exist");
+      error.statusCode = 400;
+      next(error);
+    } else {
+      res.status(200).json(wishlist);
+    }
+  } catch (error) {
+    next(error);
   }
 });
 

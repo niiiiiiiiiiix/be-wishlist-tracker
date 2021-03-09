@@ -19,7 +19,30 @@ const getAllWishlistItems = async (next) => {
   }
 };
 
+const updateById = async (id, body, next) => {
+  try {
+    const wishlist = await Wishlist.findByIdAndUpdate(id, body, {
+      new: true, // return updated content, if false return old value
+      runValidators: true, // check against mongoose song model
+    });
+    return wishlist;
+  } catch (err) {
+    next(err);
+  }
+};
+
+const deleteById = async (id, next) => {
+  try {
+    const wishlist = await Wishlist.findByIdAndDelete(id);
+    return wishlist;
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   createNewWishlistItem,
   getAllWishlistItems,
+  updateById,
+  deleteById,
 };
