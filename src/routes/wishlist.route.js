@@ -22,11 +22,13 @@ router.post("/", async (req, res, next) => {
     // -- when they should only be passing in 1 field
     // -- and it should be specifically "url" key
 
-    await page.goto(pageUrl);
-
     await page.exposeFunction("moment", () =>
       moment().format("DD MMM YYYY, h:mm A")
     );
+
+    await page.goto(pageUrl, {
+      waitUntil: "domcontentloaded",
+    });
 
     let itemDetails = await page.evaluate(async () => {
       let productLink = window.location.href;
@@ -55,21 +57,38 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const wishlistItems = await ctrl.getAllWishlistItems(next);
-
+    let browser = await puppeteer.launch({ headless: true });
     for (let i = 0; i < wishlistItems.length; i++) {
-      let browser = await puppeteer.launch();
       let page = await browser.newPage();
       let pageUrl = wishlistItems[i].productLink;
-      await page.goto(pageUrl);
-
-      await page.exposeFunction("moment", () =>
-        moment().format("DD MMM YYYY, h:mm A")
+      page.exposeFunction("moment", () =>
+        moment().format("DD MMM YYYY, h:mm:ss A")
       );
+
+      await page.setRequestInterception(true);
+
+      page.on("request", (req) => {
+        if (
+          req.resourceType() == "stylesheet" ||
+          req.resourceType() == "font" ||
+          req.resourceType() == "media" ||
+          req.resourceType() == "image"
+        ) {
+          req.abort();
+        } else {
+          req.continue();
+        }
+      });
+
+      await page.goto(pageUrl, {
+        waitUntil: "domcontentloaded",
+      });
 
       let revisedItemDetails = await page.evaluate(async () => {
         let salesPrice = document
           .querySelector(".price-sales")
           .innerText.trim();
+
         let lastUpdated = await window.moment();
 
         return {
@@ -85,23 +104,13 @@ router.get("/", async (req, res, next) => {
           $set: { lastUpdated: revisedItemDetails.lastUpdated },
         }
       );
-      await browser.close();
+      await page.close();
     }
+    await browser.close();
     res.status(200).json(wishlistItems);
   } catch (err) {
     next(err);
   }
 });
-
-// router.get("/", async (req, res, next) => {
-//   const wishlistItems = await ctrl.getAllWishlistItems(next);
-//   res.status(200).json(wishlistItems);
-//   // console.log(wishlistItems.length);
-//   // console.log(wishlistItems[0]);
-//   // let a = wishlistItems[0];
-//   // console.log(a);
-//   // console.log(a.productLink);
-//   // res.json(a.productLink);
-// });
 
 module.exports = router;
