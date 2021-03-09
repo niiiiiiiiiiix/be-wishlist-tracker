@@ -22,10 +22,6 @@ router.post("/", async (req, res, next) => {
     // -- when they should only be passing in 1 field
     // -- and it should be specifically "url" key
 
-    await page.exposeFunction("moment", () =>
-      moment().format("DD MMM YYYY, h:mm A")
-    );
-
     await page.goto(pageUrl, {
       waitUntil: "domcontentloaded",
     });
@@ -35,7 +31,15 @@ router.post("/", async (req, res, next) => {
       let productName = document.querySelector(".product-name").innerText;
       let originalPrice = document.querySelector(".price-standard").innerText;
       let salesPrice = document.querySelector(".price-sales").innerText.trim();
-      let lastUpdated = await window.moment();
+      const date = new Date();
+      const lastUpdated = date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
 
       return {
         productLink,
@@ -57,13 +61,10 @@ router.post("/", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   try {
     const wishlistItems = await ctrl.getAllWishlistItems(next);
-    let browser = await puppeteer.launch({ headless: true });
     for (let i = 0; i < wishlistItems.length; i++) {
+      let browser = await puppeteer.launch({ headless: true });
       let page = await browser.newPage();
-      let pageUrl = wishlistItems[i].productLink;
-      page.exposeFunction("moment", () =>
-        moment().format("DD MMM YYYY, h:mm:ss A")
-      );
+      let pageUrl = await wishlistItems[i].productLink;
 
       await page.setRequestInterception(true);
 
@@ -88,15 +89,20 @@ router.get("/", async (req, res, next) => {
         let salesPrice = document
           .querySelector(".price-sales")
           .innerText.trim();
-
-        let lastUpdated = await window.moment();
-
+        let date = new Date();
+        let lastUpdated = date.toLocaleString("en-GB", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
         return {
           salesPrice,
           lastUpdated,
         };
       });
-
       await Wishlist.updateOne(
         { _id: wishlistItems[i]._id },
         {
@@ -104,10 +110,23 @@ router.get("/", async (req, res, next) => {
           $set: { lastUpdated: revisedItemDetails.lastUpdated },
         }
       );
+
       await page.close();
+      await browser.close();
     }
-    await browser.close();
+
     res.status(200).json(wishlistItems);
+    let date = new Date();
+    let test = date.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    console.log(test);
+    // res.status(200);
   } catch (err) {
     next(err);
   }
