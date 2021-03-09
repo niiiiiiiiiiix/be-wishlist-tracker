@@ -102,11 +102,15 @@ router.get("/", async (req, res, next) => {
           lastUpdated,
         };
       });
+      console.log(revisedItemDetails.salesPrice);
+
       await Wishlist.updateOne(
         { _id: wishlistItems[i]._id },
         {
-          $set: { salesPrice: revisedItemDetails.salesPrice },
-          $set: { lastUpdated: revisedItemDetails.lastUpdated },
+          $set: {
+            salesPrice: revisedItemDetails.salesPrice,
+            lastUpdated: revisedItemDetails.lastUpdated,
+          },
         }
       );
 
@@ -114,7 +118,8 @@ router.get("/", async (req, res, next) => {
       await browser.close();
     }
 
-    res.status(200).json(wishlistItems);
+    const updatedWishlist = await ctrl.getAllWishlistItems(next);
+    res.status(200).json(updatedWishlist);
     let date = new Date();
     let test = date.toLocaleString("en-GB", {
       day: "2-digit",
@@ -130,14 +135,6 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-
-// router.get("/:id", async (req, res, next) => {
-//   try {
-//     const
-//   } catch (err) {
-//     next(err);
-//   }
-// })
 
 router.put("/:id", async (req, res, next) => {
   try {
