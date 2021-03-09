@@ -136,21 +136,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
-  try {
-    const wishlist = await ctrl.updateById(req.params.id, req.body, next);
-    if (wishlist === null) {
-      const error = new Error("Item does not exist");
-      error.statusCode = 400;
-      next(error);
-    } else {
-      res.status(200).json(wishlist);
-    }
-  } catch (error) {
-    next(error);
-  }
-});
-
 router.delete("/:id", async (req, res, next) => {
   try {
     const wishlist = await ctrl.deleteById(req.params.id, next);
