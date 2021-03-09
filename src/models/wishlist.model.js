@@ -23,7 +23,7 @@ const wishlistSchema = new Schema(
     },
     lastUpdated: {
       type: String,
-      required: false,
+      required: true,
     },
   },
   {
