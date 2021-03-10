@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
+const cookieParser = require("cookie-parser");
+app.use(cookieParser());
+
 const win = {
   0: "GET    /",
   1: "GET    /dumplings",
@@ -16,11 +19,11 @@ app.get("/", (req, res) => {
   res.status(200).json(win);
 });
 
+const userRouter = require("./routes/user.route");
+app.use("/user", userRouter);
+
 const wishlistRouter = require("./routes/wishlist.route");
 app.use("/wishlist", wishlistRouter);
-
-const scrapeRouter = require("./routes/scrape.route");
-app.use("/scrape", scrapeRouter);
 
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
