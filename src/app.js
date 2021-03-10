@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 const userRouter = require("./routes/user.route");
-app.use("/user", userRouter);
+app.use("/", userRouter);
 
 const wishlistRouter = require("./routes/wishlist.route");
 app.use("/wishlist", wishlistRouter);

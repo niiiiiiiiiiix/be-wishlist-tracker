@@ -5,7 +5,7 @@ const protectRoute = require("../middleware/protectRoute");
 const bcrypt = require("bcryptjs");
 const createJWTToken = require("../config/jwt");
 
-router.post("/", async (req, res, next) => {
+router.post("/signup", async (req, res, next) => {
   try {
     const user = new User(req.body);
     const newUser = await user.save();
