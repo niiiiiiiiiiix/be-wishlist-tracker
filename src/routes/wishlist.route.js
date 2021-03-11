@@ -96,7 +96,37 @@ wishlist.delete("/:id", async (req, res, next) => {
 
 wishlist.get("/", protectRoute, async (req, res, next) => {
   try {
-    const wishlistItems = await ctrl.getAllWishlistItems(next);
+    // const wishlistItems = await ctrl.getAllWishlistItems(next);
+
+    const wishlistItems = await User.aggregate([
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $unwind: "$wishlist",
+      },
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $project: {
+          _id: "$wishlist._id",
+          productLink: "$wishlist.productLink",
+          productName: "$wishlist.productName",
+          originalPrice: "$wishlist.originalPrice",
+          salesPrice: "$wishlist.salesPrice",
+          lastUpdated: "$wishlist.lastUpdated",
+        },
+      },
+    ]);
+
+    console.log(wishlistItems.length);
+    console.log(wishlistItems);
+
     for (let i = 0; i < wishlistItems.length; i++) {
       let browser = await puppeteer.launch({ headless: true });
       let page = await browser.newPage();
@@ -139,10 +169,14 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
           lastUpdated,
         };
       });
-      // console.log(revisedItemDetails.salesPrice);
+      console.log(revisedItemDetails.salesPrice);
+      console.log(revisedItemDetails.lastUpdated);
 
-      await Wishlist.updateOne(
-        { _id: wishlistItems[i]._id },
+      await page.close();
+      await browser.close();
+
+      await User.updateOne(
+        { username: req.username },
         {
           $set: {
             salesPrice: revisedItemDetails.salesPrice,
@@ -150,25 +184,35 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
           },
         }
       );
-
-      await page.close();
-      await browser.close();
     }
 
-    const updatedWishlist = await ctrl.getAllWishlistItems(next);
+    const updatedWishlist = await User.aggregate([
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $unwind: "$wishlist",
+      },
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $project: {
+          _id: "$wishlist._id",
+          productLink: "$wishlist.productLink",
+          productName: "$wishlist.productName",
+          originalPrice: "$wishlist.originalPrice",
+          salesPrice: "$wishlist.salesPrice",
+          lastUpdated: "$wishlist.lastUpdated",
+        },
+      },
+    ]);
+    // res.status(200).json(wishlistItems);
     res.status(200).json(updatedWishlist);
-
-    let date = new Date();
-    let test = date.toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    console.log(test);
-    res.status(200);
   } catch (err) {
     next(err);
   }
