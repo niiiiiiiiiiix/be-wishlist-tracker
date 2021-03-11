@@ -2,7 +2,6 @@ const express = require("express");
 const wishlist = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
 // const jsonContent = require("../middleware/requireJSONcontent");
-const Wishlist = require("../models/wishlist.model");
 const protectRoute = require("../middleware/protectRoute");
 const User = require("../models/user.model");
 
@@ -96,8 +95,6 @@ wishlist.delete("/:id", async (req, res, next) => {
 
 wishlist.get("/", protectRoute, async (req, res, next) => {
   try {
-    // const wishlistItems = await ctrl.getAllWishlistItems(next);
-
     const wishlistItems = await User.aggregate([
       {
         $match: {
@@ -187,8 +184,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       {
         $set: {
           wishlist: testArray,
-          // "wishlist.$i.salesPrice": revisedItemDetails.salesPrice,
-          // "wishlist.$i.lastUpdated": revisedItemDetails.lastUpdated,
         },
       }
     );
@@ -217,7 +212,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         },
       },
     ]);
-    // res.status(200).json(wishlistItems);
     res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
