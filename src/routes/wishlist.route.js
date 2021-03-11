@@ -115,10 +115,9 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
   ];
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
-
     testArray = [];
+    let browser = await puppeteer.launch({ headless: true });
     for (let i = 0; i < wishlistItems.length; i++) {
-      let browser = await puppeteer.launch({ headless: true });
       let page = await browser.newPage();
       let pageUrl = wishlistItems[i].productLink;
 
@@ -168,9 +167,8 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
       await testArray.push(revisedItemDetails);
       await page.close();
-      await browser.close();
     }
-
+    await browser.close();
     await User.updateOne(
       { username: req.username },
       {
