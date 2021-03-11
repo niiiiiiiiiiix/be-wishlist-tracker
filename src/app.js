@@ -7,8 +7,8 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
-const userRouter = require("./routes/user.route");
-app.use("/", userRouter);
+// const userRouter = require("./routes/user.route");
+// app.use("/", userRouter);
 
 const wishlistRouter = require("./routes/wishlist.route");
 app.use("/wishlist", wishlistRouter);

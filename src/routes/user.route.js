@@ -63,4 +63,8 @@ router.post("/logout", (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
 });
 
+// const wishlist = require("./wishlist.route")
+
+// router.use("/:username")
+
 module.exports = router;

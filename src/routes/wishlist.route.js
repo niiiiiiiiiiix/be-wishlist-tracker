@@ -102,7 +102,7 @@ router.get("/", async (req, res, next) => {
           lastUpdated,
         };
       });
-      console.log(revisedItemDetails.salesPrice);
+      // console.log(revisedItemDetails.salesPrice);
 
       await Wishlist.updateOne(
         { _id: wishlistItems[i]._id },
@@ -120,16 +120,17 @@ router.get("/", async (req, res, next) => {
 
     const updatedWishlist = await ctrl.getAllWishlistItems(next);
     res.status(200).json(updatedWishlist);
-    let date = new Date();
-    let test = date.toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
-    console.log(test);
+
+    // let date = new Date();
+    // let test = date.toLocaleString("en-GB", {
+    //   day: "2-digit",
+    //   month: "short",
+    //   year: "numeric",
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    //   second: "2-digit",
+    // });
+    // console.log(test);
     // res.status(200);
   } catch (err) {
     next(err);
