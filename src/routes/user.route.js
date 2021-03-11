@@ -1,11 +1,11 @@
 const express = require("express");
-const router = express.Router();
+const user = express.Router();
 const User = require("../models/user.model");
 const protectRoute = require("../middleware/protectRoute");
 const bcrypt = require("bcryptjs");
 const createJWTToken = require("../config/jwt");
 
-router.post("/signup", async (req, res, next) => {
+user.post("/signup", async (req, res, next) => {
   try {
     const user = new User(req.body);
     const newUser = await user.save();
@@ -17,7 +17,7 @@ router.post("/signup", async (req, res, next) => {
   }
 });
 
-router.get("/:username", protectRoute, async (req, res, next) => {
+user.get("/:username", protectRoute, async (req, res, next) => {
   try {
     const username = req.params.username;
     const regex = new RegExp(username, "gi");
@@ -28,7 +28,7 @@ router.get("/:username", protectRoute, async (req, res, next) => {
   }
 });
 
-router.post("/login", async (req, res, next) => {
+user.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
     const user = await User.findOne({ username });
@@ -59,12 +59,12 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
-router.post("/logout", (req, res) => {
+user.post("/logout", (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
 });
 
 // const wishlist = require("./wishlist.route")
 
-// router.use("/:username")
+// user.use("/:username")
 
-module.exports = router;
+module.exports = user;

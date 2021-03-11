@@ -1,12 +1,12 @@
 const express = require("express");
-const router = express.Router();
+const wishlist = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
 // const jsonContent = require("../middleware/requireJSONcontent");
 const Wishlist = require("../models/wishlist.model");
 
 const puppeteer = require("puppeteer");
 
-router.post("/", async (req, res, next) => {
+wishlist.post("/", async (req, res, next) => {
   try {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
@@ -57,7 +57,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+wishlist.get("/", async (req, res, next) => {
   try {
     const wishlistItems = await ctrl.getAllWishlistItems(next);
     for (let i = 0; i < wishlistItems.length; i++) {
@@ -137,7 +137,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+wishlist.delete("/:id", async (req, res, next) => {
   try {
     const wishlist = await ctrl.deleteById(req.params.id, next);
     if (wishlist === null) {
@@ -152,4 +152,4 @@ router.delete("/:id", async (req, res, next) => {
   }
 });
 
-module.exports = router;
+module.exports = wishlist;
