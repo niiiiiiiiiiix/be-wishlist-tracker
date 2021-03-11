@@ -51,8 +51,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
     });
 
     await browser.close();
-    // console.log(itemDetails);
-    // console.log(req.username);
     await User.updateOne(
       { username: req.username },
       {
@@ -61,8 +59,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
         },
       }
     );
-
-    // const wishlistItem = await ctrl.createNewWishlistItem(itemDetails, next);
     res.status(201).json(itemDetails);
   } catch (err) {
     next(err);
@@ -71,8 +67,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
 
 wishlist.delete("/:id", async (req, res, next) => {
   try {
-    // const wishlist = await ctrl.deleteById(req.params.id, next);
-    console.log(req.params.id);
     const wishlist = await User.updateOne(
       { username: req.username, "wishlist._id": req.params.id },
       {
@@ -94,35 +88,34 @@ wishlist.delete("/:id", async (req, res, next) => {
 });
 
 wishlist.get("/", protectRoute, async (req, res, next) => {
+  let aggregateArray = [
+    {
+      $match: {
+        username: req.username,
+      },
+    },
+    {
+      $unwind: "$wishlist",
+    },
+    {
+      $match: {
+        username: req.username,
+      },
+    },
+    {
+      $project: {
+        _id: "$wishlist._id",
+        productLink: "$wishlist.productLink",
+        productName: "$wishlist.productName",
+        originalPrice: "$wishlist.originalPrice",
+        salesPrice: "$wishlist.salesPrice",
+        lastUpdated: "$wishlist.lastUpdated",
+      },
+    },
+  ];
   try {
-    const wishlistItems = await User.aggregate([
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $unwind: "$wishlist",
-      },
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $project: {
-          _id: "$wishlist._id",
-          productLink: "$wishlist.productLink",
-          productName: "$wishlist.productName",
-          originalPrice: "$wishlist.originalPrice",
-          salesPrice: "$wishlist.salesPrice",
-          lastUpdated: "$wishlist.lastUpdated",
-        },
-      },
-    ]);
+    const wishlistItems = await User.aggregate(aggregateArray);
 
-    console.log(wishlistItems.length);
-    console.log(wishlistItems);
     testArray = [];
     for (let i = 0; i < wishlistItems.length; i++) {
       let browser = await puppeteer.launch({ headless: true });
@@ -172,8 +165,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
           lastUpdated,
         };
       });
-      console.log(revisedItemDetails.salesPrice);
-      console.log(revisedItemDetails.lastUpdated);
+
       await testArray.push(revisedItemDetails);
       await page.close();
       await browser.close();
@@ -187,31 +179,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         },
       }
     );
-    const updatedWishlist = await User.aggregate([
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $unwind: "$wishlist",
-      },
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $project: {
-          _id: "$wishlist._id",
-          productLink: "$wishlist.productLink",
-          productName: "$wishlist.productName",
-          originalPrice: "$wishlist.originalPrice",
-          salesPrice: "$wishlist.salesPrice",
-          lastUpdated: "$wishlist.lastUpdated",
-        },
-      },
-    ]);
+    const updatedWishlist = await User.aggregate(aggregateArray);
     res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
