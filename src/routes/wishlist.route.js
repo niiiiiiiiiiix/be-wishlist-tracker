@@ -186,33 +186,33 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       );
     }
 
-    const updatedWishlist = await User.aggregate([
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $unwind: "$wishlist",
-      },
-      {
-        $match: {
-          username: req.username,
-        },
-      },
-      {
-        $project: {
-          _id: "$wishlist._id",
-          productLink: "$wishlist.productLink",
-          productName: "$wishlist.productName",
-          originalPrice: "$wishlist.originalPrice",
-          salesPrice: "$wishlist.salesPrice",
-          lastUpdated: "$wishlist.lastUpdated",
-        },
-      },
-    ]);
-    // res.status(200).json(wishlistItems);
-    res.status(200).json(updatedWishlist);
+    // const updatedWishlist = await User.aggregate([
+    //   {
+    //     $match: {
+    //       username: req.username,
+    //     },
+    //   },
+    //   {
+    //     $unwind: "$wishlist",
+    //   },
+    //   {
+    //     $match: {
+    //       username: req.username,
+    //     },
+    //   },
+    //   {
+    //     $project: {
+    //       _id: "$wishlist._id",
+    //       productLink: "$wishlist.productLink",
+    //       productName: "$wishlist.productName",
+    //       originalPrice: "$wishlist.originalPrice",
+    //       salesPrice: "$wishlist.salesPrice",
+    //       lastUpdated: "$wishlist.lastUpdated",
+    //     },
+    //   },
+    // ]);
+    res.status(200).json(wishlistItems);
+    // res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
   }
