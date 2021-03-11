@@ -39,41 +39,6 @@ user.use(
   wishlist
 );
 
-// user.get("/:username/wishlist", protectRoute, async (req, res, next) => {
-//   try {
-//     const users = await User.aggregate([
-//       {
-//         $match: {
-//           username: "testing123",
-//         },
-//       },
-//       {
-//         $unwind: "$wishlist",
-//       },
-//       {
-//         $match: {
-//           username: "testing123",
-//         },
-//       },
-//       {
-//         $project: {
-//           _id: "$wishlist._id",
-//           productLink: "$wishlist.productLink",
-//           productName: "$wishlist.productName",
-//           originalPrice: "$wishlist.originalPrice",
-//           salesPrice: "$wishlist.salesPrice",
-//           lastUpdated: "$wishlist.lastUpdated",
-//         },
-//       },
-//       // { username: "testing123" }, { wishlist: 1 });
-//     ]);
-
-//     res.send(users);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 user.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
