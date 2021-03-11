@@ -126,7 +126,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
     console.log(wishlistItems.length);
     console.log(wishlistItems);
-
+    testArray = [];
     for (let i = 0; i < wishlistItems.length; i++) {
       let browser = await puppeteer.launch({ headless: true });
       let page = await browser.newPage();
@@ -152,6 +152,9 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       });
 
       let revisedItemDetails = await page.evaluate(async () => {
+        let productLink = window.location.href;
+        let productName = document.querySelector(".product-name").innerText;
+        let originalPrice = document.querySelector(".price-standard").innerText;
         let salesPrice = document
           .querySelector(".price-sales")
           .innerText.trim();
@@ -165,54 +168,57 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
           second: "2-digit",
         });
         return {
+          productLink,
+          productName,
+          originalPrice,
           salesPrice,
           lastUpdated,
         };
       });
       console.log(revisedItemDetails.salesPrice);
       console.log(revisedItemDetails.lastUpdated);
-
+      await testArray.push(revisedItemDetails);
       await page.close();
       await browser.close();
-
-      await User.updateOne(
-        { username: req.username },
-        {
-          $set: {
-            salesPrice: revisedItemDetails.salesPrice,
-            lastUpdated: revisedItemDetails.lastUpdated,
-          },
-        }
-      );
     }
 
-    // const updatedWishlist = await User.aggregate([
-    //   {
-    //     $match: {
-    //       username: req.username,
-    //     },
-    //   },
-    //   {
-    //     $unwind: "$wishlist",
-    //   },
-    //   {
-    //     $match: {
-    //       username: req.username,
-    //     },
-    //   },
-    //   {
-    //     $project: {
-    //       _id: "$wishlist._id",
-    //       productLink: "$wishlist.productLink",
-    //       productName: "$wishlist.productName",
-    //       originalPrice: "$wishlist.originalPrice",
-    //       salesPrice: "$wishlist.salesPrice",
-    //       lastUpdated: "$wishlist.lastUpdated",
-    //     },
-    //   },
-    // ]);
-    res.status(200).json(wishlistItems);
-    // res.status(200).json(updatedWishlist);
+    await User.updateOne(
+      { username: req.username },
+      {
+        $set: {
+          wishlist: testArray,
+          // "wishlist.$i.salesPrice": revisedItemDetails.salesPrice,
+          // "wishlist.$i.lastUpdated": revisedItemDetails.lastUpdated,
+        },
+      }
+    );
+    const updatedWishlist = await User.aggregate([
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $unwind: "$wishlist",
+      },
+      {
+        $match: {
+          username: req.username,
+        },
+      },
+      {
+        $project: {
+          _id: "$wishlist._id",
+          productLink: "$wishlist.productLink",
+          productName: "$wishlist.productName",
+          originalPrice: "$wishlist.originalPrice",
+          salesPrice: "$wishlist.salesPrice",
+          lastUpdated: "$wishlist.lastUpdated",
+        },
+      },
+    ]);
+    // res.status(200).json(wishlistItems);
+    res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
   }
