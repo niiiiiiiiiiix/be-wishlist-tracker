@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+// const wishlist = require("./wishlist.model")
 
 const userSchema = new mongoose.Schema({
   username: {
@@ -21,6 +22,32 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Dr", "Mr", "Mrs", "Ms", "Miss", "Mdm"],
   },
+  wishlist: [
+    {
+      productLink: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+      productName: {
+        type: String,
+        required: true,
+        unique: true,
+      },
+      originalPrice: {
+        type: String,
+        required: true,
+      },
+      salesPrice: {
+        type: String,
+        required: false,
+      },
+      lastUpdated: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 });
 
 userSchema.virtual("fullName").get(function () {

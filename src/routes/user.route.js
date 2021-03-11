@@ -17,16 +17,62 @@ user.post("/signup", async (req, res, next) => {
   }
 });
 
-user.get("/:username", protectRoute, async (req, res, next) => {
-  try {
-    const username = req.params.username;
-    const regex = new RegExp(username, "gi");
-    const users = await User.find({ username: regex });
-    res.send(users);
-  } catch (err) {
-    next(err);
-  }
-});
+// user.get("/:username", protectRoute, async (req, res, next) => {
+//   try {
+//     const username = req.params.username;
+//     const regex = new RegExp(username, "gi");
+//     const users = await User.find({ username: regex });
+//     res.send(users);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+const wishlist = require("./wishlist.route");
+
+user.use(
+  "/:username/wishlist",
+  function (req, res, next) {
+    req.username = req.params.username;
+    next();
+  },
+  wishlist
+);
+
+// user.get("/:username/wishlist", protectRoute, async (req, res, next) => {
+//   try {
+//     const users = await User.aggregate([
+//       {
+//         $match: {
+//           username: "testing123",
+//         },
+//       },
+//       {
+//         $unwind: "$wishlist",
+//       },
+//       {
+//         $match: {
+//           username: "testing123",
+//         },
+//       },
+//       {
+//         $project: {
+//           _id: "$wishlist._id",
+//           productLink: "$wishlist.productLink",
+//           productName: "$wishlist.productName",
+//           originalPrice: "$wishlist.originalPrice",
+//           salesPrice: "$wishlist.salesPrice",
+//           lastUpdated: "$wishlist.lastUpdated",
+//         },
+//       },
+//       // { username: "testing123" }, { wishlist: 1 });
+//     ]);
+
+//     res.send(users);
+//   } catch (err) {
+//     next(err);
+//   }
+// });
 
 user.post("/login", async (req, res, next) => {
   try {
@@ -62,9 +108,5 @@ user.post("/login", async (req, res, next) => {
 user.post("/logout", (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
 });
-
-// const wishlist = require("./wishlist.route")
-
-// user.use("/:username")
 
 module.exports = user;

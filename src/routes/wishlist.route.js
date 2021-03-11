@@ -3,10 +3,12 @@ const wishlist = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
 // const jsonContent = require("../middleware/requireJSONcontent");
 const Wishlist = require("../models/wishlist.model");
+const protectRoute = require("../middleware/protectRoute");
+const User = require("../models/user.model");
 
 const puppeteer = require("puppeteer");
 
-wishlist.post("/", async (req, res, next) => {
+wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
@@ -50,14 +52,49 @@ wishlist.post("/", async (req, res, next) => {
     });
 
     await browser.close();
-    const wishlistItem = await ctrl.createNewWishlistItem(itemDetails, next);
-    res.status(201).json(wishlistItem);
+    // console.log(itemDetails);
+    // console.log(req.username);
+    await User.updateOne(
+      { username: req.username },
+      {
+        $addToSet: {
+          wishlist: itemDetails,
+        },
+      }
+    );
+
+    // const wishlistItem = await ctrl.createNewWishlistItem(itemDetails, next);
+    res.status(201).json(itemDetails);
   } catch (err) {
     next(err);
   }
 });
 
-wishlist.get("/", async (req, res, next) => {
+wishlist.delete("/:id", async (req, res, next) => {
+  try {
+    // const wishlist = await ctrl.deleteById(req.params.id, next);
+    console.log(req.params.id);
+    const wishlist = await User.updateOne(
+      { username: req.username, "wishlist._id": req.params.id },
+      {
+        $pull: {
+          wishlist: { _id: req.params.id },
+        },
+      }
+    );
+    if (wishlist === null) {
+      const error = new Error("Item does not exist");
+      error.statusCode = 400;
+      next(error);
+    } else {
+      res.status(200).json(wishlist);
+    }
+  } catch (error) {
+    next(error);
+  }
+});
+
+wishlist.get("/", protectRoute, async (req, res, next) => {
   try {
     const wishlistItems = await ctrl.getAllWishlistItems(next);
     for (let i = 0; i < wishlistItems.length; i++) {
@@ -121,34 +158,19 @@ wishlist.get("/", async (req, res, next) => {
     const updatedWishlist = await ctrl.getAllWishlistItems(next);
     res.status(200).json(updatedWishlist);
 
-    // let date = new Date();
-    // let test = date.toLocaleString("en-GB", {
-    //   day: "2-digit",
-    //   month: "short",
-    //   year: "numeric",
-    //   hour: "2-digit",
-    //   minute: "2-digit",
-    //   second: "2-digit",
-    // });
-    // console.log(test);
-    // res.status(200);
+    let date = new Date();
+    let test = date.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
+    console.log(test);
+    res.status(200);
   } catch (err) {
     next(err);
-  }
-});
-
-wishlist.delete("/:id", async (req, res, next) => {
-  try {
-    const wishlist = await ctrl.deleteById(req.params.id, next);
-    if (wishlist === null) {
-      const error = new Error("Item does not exist");
-      error.statusCode = 400;
-      next(error);
-    } else {
-      res.status(200).json(wishlist);
-    }
-  } catch (error) {
-    next(error);
   }
 });
 
