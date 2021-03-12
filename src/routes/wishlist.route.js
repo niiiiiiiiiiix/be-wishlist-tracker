@@ -1,13 +1,15 @@
 const express = require("express");
 const wishlist = express.Router();
 const ctrl = require("../controllers/wishlist.controller");
+
 // const jsonContent = require("../middleware/requireJSONcontent");
 const protectRoute = require("../middleware/protectRoute");
+const correctUser = require("../middleware/correctUser");
 const User = require("../models/user.model");
 
 const puppeteer = require("puppeteer");
 
-wishlist.post("/", protectRoute, async (req, res, next) => {
+wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
   try {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
@@ -65,7 +67,7 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
   }
 });
 
-wishlist.delete("/:id", async (req, res, next) => {
+wishlist.delete("/:id", [protectRoute, correctUser], async (req, res, next) => {
   try {
     const wishlist = await User.updateOne(
       { username: req.username, "wishlist._id": req.params.id },
@@ -87,7 +89,7 @@ wishlist.delete("/:id", async (req, res, next) => {
   }
 });
 
-wishlist.get("/", protectRoute, async (req, res, next) => {
+wishlist.get("/", [protectRoute, correctUser], async (req, res, next) => {
   let aggregateArray = [
     {
       $match: {

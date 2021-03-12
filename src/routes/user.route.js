@@ -1,33 +1,10 @@
 const express = require("express");
 const user = express.Router();
-const User = require("../models/user.model");
+const UserModel = require("../models/user.model");
 const protectRoute = require("../middleware/protectRoute");
+const correctUser = require("../middleware/correctUser");
 const bcrypt = require("bcryptjs");
 const createJWTToken = require("../config/jwt");
-
-user.post("/signup", async (req, res, next) => {
-  try {
-    const user = new User(req.body);
-    const newUser = await user.save();
-    res.status(201).send(newUser);
-  } catch (err) {
-    err.statusCode = 400;
-    err.message = "Invalid username, please try again!";
-    next(err);
-  }
-});
-
-// user.get("/:username", protectRoute, async (req, res, next) => {
-//   try {
-//     const username = req.params.username;
-//     const regex = new RegExp(username, "gi");
-//     const users = await User.find({ username: regex });
-//     res.send(users);
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 const wishlist = require("./wishlist.route");
 
 user.use(
@@ -39,10 +16,22 @@ user.use(
   wishlist
 );
 
+user.post("/signup", async (req, res, next) => {
+  try {
+    const user = new UserModel(req.body);
+    const newUser = await user.save();
+    res.status(201).send(newUser);
+  } catch (err) {
+    err.statusCode = 400;
+    err.message = "Invalid username, please try again!";
+    next(err);
+  }
+});
+
 user.post("/login", async (req, res, next) => {
   try {
     const { username, password } = req.body;
-    const user = await User.findOne({ username });
+    const user = await UserModel.findOne({ username });
     const result = await bcrypt.compare(password, user.password);
 
     if (!result) {
@@ -70,7 +59,7 @@ user.post("/login", async (req, res, next) => {
   }
 });
 
-user.post("/logout", (req, res) => {
+user.post("/logout", [protectRoute, correctUser], (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
 });
 
