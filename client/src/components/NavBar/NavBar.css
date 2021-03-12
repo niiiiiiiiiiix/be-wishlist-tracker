@@ -1,0 +1,163 @@
+.navbar {
+  background: #152238;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  z-index: 999;
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+}
+
+.container {
+  z-index: 1;
+  width: 100%;
+  max-width: 90%;
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.sunny-icon {
+  height: 36px;
+  padding-right: 12px;
+}
+
+.navbar-logo {
+  color: #f5f5f5;
+  justify-self: start;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-icon {
+  margin-right: 8px;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  text-align: center;
+}
+
+.nav-links {
+  color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  padding: 8px 16px;
+  font-size: 24px;
+  letter-spacing: 0.5px;
+  height: 100%;
+  border-radius: 8px;
+}
+
+.nav-links:hover {
+  cursor: pointer;
+  background-color: rgb(39, 143, 255);
+  transition: all 0.4s ease-out;
+}
+
+.fa-bars {
+  color: #f5f5f5;
+}
+
+.menu-icon {
+  display: none;
+  color: #f5f5f5;
+}
+
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .nav-menu.active {
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 100%;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    background: #152238;
+    animation: growDown 500ms ease-in-out forwards;
+    transform-origin: top;
+    z-index: 1;
+  }
+
+  @keyframes growDown {
+    0% {
+      transform: scaleY(0);
+    }
+    50% {
+      transform: scaleY(1.1);
+    }
+    100% {
+      transform: scaleY(1);
+    }
+  }
+
+  .nav-links {
+    text-align: center;
+    padding: 16px 0 16px 0;
+    width: 100%;
+    display: table;
+  }
+
+  .sign-up {
+    padding: 16px 0 32px 0;
+  }
+
+  .nav-item:hover {
+    border: none;
+  }
+
+  .nav-item {
+    width: 100%;
+  }
+
+  .navbar-logo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(25%, 50%);
+  }
+
+  .menu-icon {
+    display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 60%);
+    /* zomgwtf i made a stupid mistake here – 
+    i used "... translate (-100%, 60%)" instead of
+    "... translate(-100%, 60%)" */
+    font-size: 1.8rem;
+    cursor: pointer;
+  }
+
+  .nav-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+    padding: 0 0 16px 0;
+  }
+}

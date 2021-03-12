@@ -1,0 +1,74 @@
+:root {
+  --default: #fff;
+}
+
+.btn {
+  padding: 8px 20px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-style-default {
+  background-color: var(--default);
+  color: #242424;
+  border: 1px solid var(--default);
+}
+
+.btn-style-outline {
+  background-color: transparent;
+  color: #242424;
+  padding: 8px 20px;
+  border: 1px solid var(--default);
+  transition: all 0.3s ease-out;
+}
+
+.btn-size-default {
+  padding: 8px 16px;
+}
+
+.btn-size-mobile {
+  text-align: center;
+  border-radius: 4px;
+  width: 80%;
+  text-decoration: none;
+  font-size: 24px;
+  background-color: transparent;
+  color: #fff;
+  padding: 14px 20px;
+  border: 1px solid #fff;
+  transition: all 0.3s ease-out;
+}
+
+.btn-size-default:hover,
+.btn-size-mobile:hover {
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: #242424;
+}
+
+.btn-color-default {
+  background-color: #155084;
+  color: #fff;
+  border: none;
+}
+
+.btn-color-default:hover {
+  background-color: #fff;
+  color: #242424;
+  border: none;
+}
+
+.btn-color-alt {
+  background-color: #276afb;
+  color: #fff;
+  border: none;
+}
+
+.btn-font-default {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 22px;
+}
