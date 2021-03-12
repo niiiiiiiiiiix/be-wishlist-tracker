@@ -97,11 +97,11 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
     {
       $unwind: "$wishlist",
     },
-    {
-      $match: {
-        username: req.username,
-      },
-    },
+    // {
+    //   $match: {
+    //     username: req.username,
+    //   },
+    // },
     {
       $project: {
         _id: "$wishlist._id",
