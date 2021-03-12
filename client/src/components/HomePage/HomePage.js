@@ -14,7 +14,6 @@ const HomePage = () => {
       <HeroSection {...HomeObjOne} />
       <HeroSection {...HomeObjTwo} />
       <HeroSection {...HomeObjThree} />
-      <HeroSection {...HomeObjFour} />
     </div>
   );
 };
