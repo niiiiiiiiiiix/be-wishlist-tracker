@@ -4,28 +4,69 @@
 }
 
 .demo-container {
-  /* background-color: #333; */
   padding: 1rem;
   padding-top: 0;
   margin-top: 1rem;
+  height: 100vh;
 }
 
-.draggable {
+h1 {
   background-color: #fff;
   border: 1px solid black;
-  cursor: move;
   margin-top: 21.44px;
   margin-bottom: 21.44px;
 }
 
-.draggable.dragging {
-  opacity: 0.5;
+.action-bar {
+  background-color: #fff;
+  border: 1px solid black;
+  margin-top: 21.44px;
+  margin-bottom: 21.44px;
 }
 
-canvas {
-  background-color: #f5f5f5;
+.wishlist {
+  background-color: #fff;
+  border: 1px solid black;
+  margin-top: 21.44px;
+  margin-bottom: 21.44px;
 }
 
-canvas.chartjs-render-monitor {
-  border: 0;
+.table-content {
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.table-content thead :first-child {
+  width: 40%;
+}
+.table-content thead :nth-child(2) {
+  width: 15%;
+}
+.table-content thead :nth-child(3) {
+  width: 15%;
+}
+.table-content thead :nth-child(4) {
+  width: 20%;
+}
+
+.table-content thead tr {
+  background-color: #152238;
+  color: #fff;
+  text-align: left;
+  font-weight: bold;
+}
+
+.table-content td,
+th {
+  padding: 12px 12px;
+}
+
+table,
+th,
+td {
+  border: 1px solid black;
 }

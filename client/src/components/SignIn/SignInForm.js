@@ -1,9 +1,9 @@
 import React from "react";
-import "./FinalSignIn.css";
+import "./SignInForm.css";
 import useForm from "./useForm";
 import validateInfo from "./validateInfo";
 
-const FormSignIn = ({ submitForm }) => {
+const SignInForm = ({ submitForm }) => {
   const { handleChange, values, handleSubmit, errors } = useForm(
     submitForm,
     validateInfo
@@ -27,7 +27,7 @@ const FormSignIn = ({ submitForm }) => {
           />
           {errors.username && <p>{errors.username}</p>}
         </div>
-        <div className="all-form-inputs">
+        {/* <div className="all-form-inputs">
           <label htmlFor="username" className="form-label">
             Email:
           </label>
@@ -41,7 +41,7 @@ const FormSignIn = ({ submitForm }) => {
             onChange={handleChange}
           />
           {errors.email && <p>{errors.email}</p>}
-        </div>
+        </div> */}
         <div className="all-form-inputs">
           <label htmlFor="password" className="form-label">
             Password:
@@ -57,7 +57,7 @@ const FormSignIn = ({ submitForm }) => {
           />
           {errors.password && <p>{errors.password}</p>}
         </div>
-        <div className="all-form-inputs">
+        {/* <div className="all-form-inputs">
           <label htmlFor="password2" className="form-label">
             Confirm Password:
           </label>
@@ -71,16 +71,16 @@ const FormSignIn = ({ submitForm }) => {
             onChange={handleChange}
           />
           {errors.password2 && <p>{errors.password2}</p>}
-        </div>
+        </div> */}
         <button className="form-input-btn" type="submit">
-          Sign up
+          Sign in
         </button>
         <span className="form-input-login">
-          Already have an account? Login <a href="/">here</a>
+          Don't have an account? Sign up <a href="/sign-up">here</a>
         </span>
       </div>
     </form>
   );
 };
 
-export default FormSignIn;
+export default SignInForm;

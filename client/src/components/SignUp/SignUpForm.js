@@ -3,7 +3,7 @@ import "./SignUpForm.css";
 import useForm from "./useForm";
 import validateInfo from "./validateInfo";
 
-const FormSignUp = ({ submitForm }) => {
+const SignUpForm = ({ submitForm }) => {
   const { handleChange, values, handleSubmit, errors } = useForm(
     submitForm,
     validateInfo
@@ -76,11 +76,11 @@ const FormSignUp = ({ submitForm }) => {
           Sign up
         </button>
         <span className="form-input-login">
-          Already have an account? Login <a href="/">here</a>
+          Already have an account? Login <a href="/sign-in">here</a>
         </span>
       </div>
     </form>
   );
 };
 
-export default FormSignUp;
+export default SignUpForm;

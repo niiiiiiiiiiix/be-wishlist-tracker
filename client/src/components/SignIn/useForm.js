@@ -4,9 +4,9 @@ import validateInfo from "./validateInfo";
 const useForm = (callback, validate) => {
   const [values, setValues] = useState({
     username: "",
-    email: "",
+    // email: "",
     password: "",
-    password2: "",
+    // password2: "",
   });
   const [errors, setErrors] = useState({});
 

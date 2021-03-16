@@ -7,6 +7,9 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+const cors = require("cors");
+app.use(cors());
+
 const userRouter = require("./routes/user.route");
 app.use("/user", userRouter);
 
