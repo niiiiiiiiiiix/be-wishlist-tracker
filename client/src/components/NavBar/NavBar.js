@@ -29,11 +29,11 @@ function NavBar() {
               Home
             </Link>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <Link to="/demo" className="nav-links" onClick={closeMobileMenu}>
               Demo
             </Link>
-          </li>
+          </li> */}
           {/* <li className="nav-item">
             <Link to="/plans" className="nav-links" onClick={closeMobileMenu}>
               Plans
@@ -48,7 +48,7 @@ function NavBar() {
               Sign Up
             </Link>
           </li>
-          {/* <li className="nav-item">
+          <li className="nav-item">
             <Link
               to="/sign-in"
               className="nav-links sign-in"
@@ -56,7 +56,7 @@ function NavBar() {
             >
               Sign In
             </Link>
-          </li> */}
+          </li>
         </ul>
       </div>
     </div>

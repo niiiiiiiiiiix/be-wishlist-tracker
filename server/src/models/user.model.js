@@ -2,6 +2,31 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 // const wishlist = require("./wishlist.model")
 
+const wishlistSchema = new mongoose.Schema({
+  productLink: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  productName: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  originalPrice: {
+    type: String,
+    required: true,
+  },
+  salesPrice: {
+    type: String,
+    required: false,
+  },
+  lastUpdated: {
+    type: String,
+    required: true,
+  },
+});
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -22,33 +47,56 @@ const userSchema = new mongoose.Schema({
     type: String,
     enum: ["Dr", "Mr", "Mrs", "Ms", "Miss", "Mdm"],
   },
-  wishlist: [
-    {
-      productLink: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      productName: {
-        type: String,
-        required: true,
-        unique: true,
-      },
-      originalPrice: {
-        type: String,
-        required: true,
-      },
-      salesPrice: {
-        type: String,
-        required: false,
-      },
-      lastUpdated: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  wishlist: [wishlistSchema],
 });
+
+// const userSchema = new mongoose.Schema({
+//   username: {
+//     type: String,
+//     required: true,
+//     unique: true,
+//     minlength: 8,
+//     lowercase: true,
+//     match: /^[a-zA-Z0-9]*$/,
+//   },
+//   password: {
+//     type: String,
+//     required: true,
+//     minlength: 8,
+//   },
+//   firstName: String,
+//   lastName: String,
+//   salutation: {
+//     type: String,
+//     enum: ["Dr", "Mr", "Mrs", "Ms", "Miss", "Mdm"],
+//   },
+//   wishlist: [
+//     {
+//       productLink: {
+//         type: String,
+//         required: true,
+//         unique: true,
+//       },
+//       productName: {
+//         type: String,
+//         required: true,
+//         unique: true,
+//       },
+//       originalPrice: {
+//         type: String,
+//         required: true,
+//       },
+//       salesPrice: {
+//         type: String,
+//         required: false,
+//       },
+//       lastUpdated: {
+//         type: String,
+//         required: true,
+//       },
+//     },
+//   ],
+// });
 
 userSchema.virtual("fullName").get(function () {
   return `${this.salutation} ${this.firstName} ${this.lastName}`;
