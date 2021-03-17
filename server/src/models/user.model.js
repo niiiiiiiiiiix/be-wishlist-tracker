@@ -41,69 +41,7 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 8,
   },
-  firstName: String,
-  lastName: String,
-  salutation: {
-    type: String,
-    enum: ["Dr", "Mr", "Mrs", "Ms", "Miss", "Mdm"],
-  },
   wishlist: [wishlistSchema],
-});
-
-// const userSchema = new mongoose.Schema({
-//   username: {
-//     type: String,
-//     required: true,
-//     unique: true,
-//     minlength: 8,
-//     lowercase: true,
-//     match: /^[a-zA-Z0-9]*$/,
-//   },
-//   password: {
-//     type: String,
-//     required: true,
-//     minlength: 8,
-//   },
-//   firstName: String,
-//   lastName: String,
-//   salutation: {
-//     type: String,
-//     enum: ["Dr", "Mr", "Mrs", "Ms", "Miss", "Mdm"],
-//   },
-//   wishlist: [
-//     {
-//       productLink: {
-//         type: String,
-//         required: true,
-//         unique: true,
-//       },
-//       productName: {
-//         type: String,
-//         required: true,
-//         unique: true,
-//       },
-//       originalPrice: {
-//         type: String,
-//         required: true,
-//       },
-//       salesPrice: {
-//         type: String,
-//         required: false,
-//       },
-//       lastUpdated: {
-//         type: String,
-//         required: true,
-//       },
-//     },
-//   ],
-// });
-
-userSchema.virtual("fullName").get(function () {
-  return `${this.salutation} ${this.firstName} ${this.lastName}`;
-});
-
-userSchema.virtual("reverseName").get(function () {
-  return `${this.lastName}, ${this.firstName}`;
 });
 
 userSchema.pre("save", async function () {

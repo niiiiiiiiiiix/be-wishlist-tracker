@@ -5,8 +5,8 @@ import NavBar from "./components/NavBar/NavBar";
 import Demo from "./components/Demo/Demo";
 import HomePage from "./components/HomePage/HomePage";
 // import Plans from "./components/Plans/Plans";
-import SignUp from "./components/SignUp/ActualForm";
-import SignIn from "./components/SignIn/ActualForm";
+import SignUp from "./components/SignUpIn/SignUp/ActualForm";
+import SignIn from "./components/SignUpIn/SignUp/ActualForm";
 
 function App() {
   return (
