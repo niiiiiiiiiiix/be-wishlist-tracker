@@ -1,55 +1,87 @@
-import React from "react";
 import "../SignInUp.css";
-import useForm from "./useForm";
-import validateInfo from "./validateInfo";
+import React from "react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
 
-const SignInForm = ({ submitForm }) => {
-  const { handleChange, values, handleSubmit, errors } = useForm(
-    submitForm,
-    validateInfo
-  );
-
+const SignInForm = () => {
   return (
-    <form className="form" onSubmit={handleSubmit}>
-      <div className="sub-form">
-        <div className="all-form-inputs">
-          <label htmlFor="username" className="form-label">
-            Username:
-          </label>
-          <input
-            id="username"
-            type="text"
-            name="username"
-            className="form-input"
-            placeholder="Enter your username"
-            value={values.username}
-            onChange={handleChange}
-          />
-          {errors.username && <p>{errors.username}</p>}
-        </div>
-        <div className="all-form-inputs">
-          <label htmlFor="password" className="form-label">
-            Password:
-          </label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            className="form-input"
-            placeholder="Enter your password"
-            value={values.password}
-            onChange={handleChange}
-          />
-          {errors.password && <p>{errors.password}</p>}
-        </div>
-        <button className="form-input-btn" type="submit">
-          Sign in
-        </button>
-        <span className="form-input-login">
-          Don't have an account? Sign up <a href="/sign-up">here</a>
-        </span>
-      </div>
-    </form>
+    <Formik
+      initialValues={{
+        username: "",
+        password: "",
+      }}
+      validationSchema={Yup.object().shape({
+        username: Yup.string().required("Username is required"),
+        password: Yup.string()
+          .min(6, "Password must be at least 6 characters")
+          .required("Password is required"),
+      })}
+      onSubmit={(values) => {
+        axios
+          .post("http://localhost:5000/user/login", values)
+          .then((response) => {
+            console.log(response);
+            alert("Success!");
+          })
+          .catch((error) => {
+            alert(
+              "Error! Please try a different username or password!" + error
+            );
+          });
+      }}
+    >
+      {({ errors, status, touched }) => (
+        <Form className="form">
+          <div className="sub-form">
+            <div className="all-form-inputs">
+              <label htmlFor="username" className="form-label">
+                Username:
+              </label>
+              <Field
+                name="username"
+                type="text"
+                className={
+                  "form-input" +
+                  (errors.username && touched.username ? " is-invalid" : "")
+                }
+                placeholder="Enter your username"
+              />
+              <ErrorMessage
+                name="username"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
+            <div className="all-form-inputs">
+              <label htmlFor="password" className="form-label">
+                Password:
+              </label>
+              <Field
+                name="password"
+                type="password"
+                className={
+                  "form-input" +
+                  (errors.password && touched.password ? " is-invalid" : "")
+                }
+                placeholder="Enter your password"
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="invalid-feedback"
+              />
+            </div>
+            <button type="submit" className="form-input-btn">
+              Sign In
+            </button>
+            <span className="form-input-login">
+              Already have an account? Sign in <a href="/sign-in">here</a>
+            </span>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

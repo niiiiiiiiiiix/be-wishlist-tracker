@@ -6,7 +6,7 @@ import Demo from "./components/Demo/Demo";
 import HomePage from "./components/HomePage/HomePage";
 // import Plans from "./components/Plans/Plans";
 import SignUp from "./components/SignUpIn/SignUp/ActualForm";
-import SignIn from "./components/SignUpIn/SignUp/ActualForm";
+import SignIn from "./components/SignUpIn/SignIn/ActualForm";
 
 function App() {
   return (

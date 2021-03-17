@@ -35,7 +35,7 @@ const SignUpForm = () => {
             alert("Success!");
           })
           .catch((error) => {
-            alert("Error! Please try a different username or email!" + error);
+            alert("Error! Please try a different username or email!");
           });
       }}
     >
