@@ -7,11 +7,13 @@ const wishlistSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
+    sparse: true,
   },
   productName: {
     type: String,
     required: true,
     unique: true,
+    sparse: true,
   },
   originalPrice: {
     type: String,

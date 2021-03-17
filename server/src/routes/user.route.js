@@ -72,10 +72,11 @@ user.post("/signup", async (req, res, next) => {
   try {
     const user = new UserModel(req.body);
     const newUser = await user.save();
+
     res.status(201).send(newUser);
   } catch (err) {
-    err.statusCode = 400;
-    err.message = "Invalid username, please try again!";
+    // err.statusCode = 400;
+    // err.message = "Invalid username, please try again!";
     next(err);
   }
 });
@@ -111,7 +112,7 @@ user.post("/login", async (req, res, next) => {
   }
 });
 
-user.post("/logout", [protectRoute, correctUser], (req, res) => {
+user.post("/logout", protectRoute, (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
 });
 
