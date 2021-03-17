@@ -32,9 +32,9 @@ const SignUpForm = () => {
           .post("http://localhost:5000/user/signup", values)
           .then((response) => {
             console.log(response);
-            alert("Success!");
+            alert("Sign up success!");
           })
-          .catch((error) => {
+          .catch(() => {
             alert("Error! Please try a different username or email!");
           });
       }}

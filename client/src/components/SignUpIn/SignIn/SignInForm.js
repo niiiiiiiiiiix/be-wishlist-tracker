@@ -19,15 +19,15 @@ const SignInForm = () => {
       })}
       onSubmit={(values) => {
         axios
-          .post("http://localhost:5000/user/login", values)
+          .post("http://localhost:5000/user/login", values, {
+            withCredentials: true,
+          })
           .then((response) => {
             console.log(response);
-            alert("Success!");
+            alert("Log in success!");
           })
           .catch((error) => {
-            alert(
-              "Error! Please try a different username or password!" + error
-            );
+            alert("Error! Please try a different username or password!");
           });
       }}
     >
@@ -76,7 +76,7 @@ const SignInForm = () => {
               Sign In
             </button>
             <span className="form-input-login">
-              Already have an account? Sign in <a href="/sign-in">here</a>
+              Don't have an account? Sign up <a href="/sign-up">here</a>
             </span>
           </div>
         </Form>
