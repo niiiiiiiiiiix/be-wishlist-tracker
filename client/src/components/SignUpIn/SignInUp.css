@@ -17,7 +17,7 @@
 
 .all-form-inputs {
   margin-bottom: 0.5rem;
-  width: 60%;
+  width: 50%;
 }
 
 .all-form-inputs p {
@@ -127,7 +127,7 @@
 
 @media (max-width: 767px) {
   .all-form-inputs {
-    width: 60%;
+    width: 50%;
   }
   .form-input-btn {
     width: 40%;
