@@ -6,6 +6,7 @@ const protectRoute = require("../middleware/protectRoute");
 const User = require("../models/user.model");
 
 const puppeteer = require("puppeteer");
+const axios = require("axios");
 
 // wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.post("/", protectRoute, async (req, res, next) => {
@@ -112,12 +113,14 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       },
     },
   ];
+
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
     testArray = [];
     let browser = await puppeteer.launch({ headless: true });
     for (let i = 0; i < wishlistItems.length; i++) {
       let page = await browser.newPage();
+
       let pageUrl = wishlistItems[i].productLink;
 
       await page.setRequestInterception(true);
@@ -168,8 +171,9 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       await page.close();
     }
     await browser.close();
+
     await User.updateOne(
-      { username: req.username },
+      { username: req.user.username },
       {
         $set: {
           wishlist: testArray,

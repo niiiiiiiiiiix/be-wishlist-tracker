@@ -9,7 +9,6 @@ const URL = "http://localhost:5000/user/wishlist";
 const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
-  // const [user, setUser] = useState();
 
   let urlInput = React.createRef();
   function addToWishlist() {
@@ -45,19 +44,6 @@ const Demo = () => {
         console.log(error);
       });
   }
-  // function deleteFromWishlist(id) {
-  //   axios
-  //     .delete(`${URL}/testing456/wishlist/${id}`, {
-  //       withCredentials: true,
-  //     })
-  //     .then((item) => {
-  //       console.log(item);
-  //       setWishlist((wishlist) => [...wishlist, item.data]);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
 
   function refreshWishlist() {
     setIsLoading(true);
