@@ -1,15 +1,14 @@
 const express = require("express");
 const wishlist = express.Router({ mergeParams: true });
-// const ctrl = require("../controllers/wishlist.controller");
-
 // const jsonContent = require("../middleware/requireJSONcontent");
 const protectRoute = require("../middleware/protectRoute");
-const correctUser = require("../middleware/correctUser");
+// const correctUser = require("../middleware/correctUser");
 const User = require("../models/user.model");
 
 const puppeteer = require("puppeteer");
 
-wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
+// wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
+wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
@@ -54,7 +53,7 @@ wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 
     await browser.close();
     await User.updateOne(
-      { username: req.username },
+      { username: req.user.username },
       {
         $addToSet: {
           wishlist: itemDetails,
@@ -67,10 +66,11 @@ wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
   }
 });
 
-wishlist.delete("/:id", [protectRoute, correctUser], async (req, res, next) => {
+// wishlist.delete("/:id", [protectRoute, correctUser], async (req, res, next) => {
+wishlist.delete("/:id", protectRoute, async (req, res, next) => {
   try {
     const wishlist = await User.updateOne(
-      { username: req.username, "wishlist._id": req.params.id },
+      { username: req.user.username, "wishlist._id": req.params.id },
       {
         $pull: {
           wishlist: { _id: req.params.id },
@@ -89,11 +89,13 @@ wishlist.delete("/:id", [protectRoute, correctUser], async (req, res, next) => {
   }
 });
 
-wishlist.get("/", [protectRoute, correctUser], async (req, res, next) => {
+// wishlist.get("/", [protectRoute, correctUser], async (req, res, next) => {
+wishlist.get("/", protectRoute, async (req, res, next) => {
   let aggregateArray = [
     {
       $match: {
-        username: req.username,
+        // username: req.username,
+        username: req.user.username,
       },
     },
     {

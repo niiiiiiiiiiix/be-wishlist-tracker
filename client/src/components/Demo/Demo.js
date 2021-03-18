@@ -4,16 +4,18 @@ import { ImCross } from "react-icons/im";
 import axios from "axios";
 import Loader from "./Loader";
 
+const URL = "http://localhost:5000/user/wishlist";
+
 const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+  // const [user, setUser] = useState();
 
   let urlInput = React.createRef();
   function addToWishlist() {
-    console.log(urlInput.current.value);
     axios
       .post(
-        "http://localhost:5000/user/testing456/wishlist",
+        URL,
         {
           url: urlInput.current.value,
         },
@@ -22,7 +24,6 @@ const Demo = () => {
         }
       )
       .then((item) => {
-        console.log(item);
         setWishlist((wishlist) => [...wishlist, item.data]);
       })
       .catch((error) => {
@@ -30,15 +31,44 @@ const Demo = () => {
       });
   }
 
+  function removeFromWishlist(id) {
+    // useful link = https://www.robinwieruch.de/react-remove-item-from-list
+    console.log(id);
+    const newWishlist = wishlist.filter((item) => item._id !== id);
+    console.log(newWishlist);
+    axios
+      .delete(`${URL}/${id}`, { withCredentials: true })
+      .then(() => {
+        setWishlist(newWishlist);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // function deleteFromWishlist(id) {
+  //   axios
+  //     .delete(`${URL}/testing456/wishlist/${id}`, {
+  //       withCredentials: true,
+  //     })
+  //     .then((item) => {
+  //       console.log(item);
+  //       setWishlist((wishlist) => [...wishlist, item.data]);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
+
   function refreshWishlist() {
     setIsLoading(true);
     axios
-      .get("http://localhost:5000/user/testing456/wishlist", {
+      .get(URL, {
         withCredentials: true,
       })
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -48,7 +78,7 @@ const Demo = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get("http://localhost:5000/user/testing456/wishlist", {
+      .get(URL, {
         withCredentials: true,
       })
       .then((response) => {
@@ -109,8 +139,11 @@ const Demo = () => {
                     <td>{item.originalPrice}</td>
                     <td>{item.salesPrice}</td>
                     <td>{item.lastUpdated}</td>
-                    <td className="delete-button">
-                      <ImCross />
+                    <td>
+                      <ImCross
+                        onClick={() => removeFromWishlist(item._id)}
+                        className="delete-button"
+                      />
                     </td>
                   </tr>
                 );
