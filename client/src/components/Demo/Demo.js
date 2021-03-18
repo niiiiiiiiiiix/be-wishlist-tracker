@@ -2,20 +2,37 @@ import React, { useState, useEffect } from "react";
 import "./Demo.css";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
+import Loader from "./Loader";
 
 const Demo = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   useEffect(() => {
+    setIsLoading(true);
     axios
-      .get("http://localhost:5000/user/test")
-      .then((response) => setWishlist(response.data));
+      .get("http://localhost:5000/user/testing456/wishlist", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setWishlist(response.data);
+      })
+      // .then((response) => console.log(response.data));
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
     <div className="bodyy">
       <div className="demo-container">
         <h1>This is your demo page</h1>
-        <div className="action-bar">Action Bar for sort/filter/refresh</div>
+        <div>
+          <ul className="action-bar">
+            <li className="add-wishlist-button action-bar-text">Add item</li>
+            <li className="refresh-button action-bar-text">Refresh wishlist</li>
+          </ul>
+        </div>
         <div className="wishlist">
           <table className="table-content">
             <thead>
@@ -27,6 +44,7 @@ const Demo = () => {
                 <th>Delete</th>
               </tr>
             </thead>
+            {isLoading && <Loader />}
             <tbody>
               {wishlist.map((item) => {
                 return (

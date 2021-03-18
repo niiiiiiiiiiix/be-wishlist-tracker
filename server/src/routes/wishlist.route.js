@@ -1,6 +1,6 @@
 const express = require("express");
 const wishlist = express.Router({ mergeParams: true });
-const ctrl = require("../controllers/wishlist.controller");
+// const ctrl = require("../controllers/wishlist.controller");
 
 // const jsonContent = require("../middleware/requireJSONcontent");
 const protectRoute = require("../middleware/protectRoute");
