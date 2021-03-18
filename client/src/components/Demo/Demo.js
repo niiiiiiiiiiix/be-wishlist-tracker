@@ -7,6 +7,22 @@ import Loader from "./Loader";
 const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+
+  function refreshWishlist() {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:5000/user/testing456/wishlist", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setWishlist(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   useEffect(() => {
     setIsLoading(true);
     axios
@@ -30,7 +46,12 @@ const Demo = () => {
         <div>
           <ul className="action-bar">
             <li className="add-wishlist-button action-bar-text">Add item</li>
-            <li className="refresh-button action-bar-text">Refresh wishlist</li>
+            <button
+              className="refresh-button action-bar-text"
+              onClick={refreshWishlist}
+            >
+              Refresh wishlist
+            </button>
           </ul>
         </div>
         <div className="wishlist">
