@@ -8,6 +8,28 @@ const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
 
+  let urlInput = React.createRef();
+  function addToWishlist() {
+    console.log(urlInput.current.value);
+    axios
+      .post(
+        "http://localhost:5000/user/testing456/wishlist",
+        {
+          url: urlInput.current.value,
+        },
+        {
+          withCredentials: true,
+        }
+      )
+      .then((item) => {
+        console.log(item);
+        setWishlist((wishlist) => [...wishlist, item.data]);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   function refreshWishlist() {
     setIsLoading(true);
     axios
@@ -45,7 +67,17 @@ const Demo = () => {
         <h1>This is your demo page</h1>
         <div>
           <ul className="action-bar">
-            <li className="add-wishlist-button action-bar-text">Add item</li>
+            <input
+              type="text"
+              ref={urlInput}
+              placeholder="Paste/type url here"
+            ></input>
+            <button
+              className="add-wishlist-button action-bar-text"
+              onClick={addToWishlist}
+            >
+              Add item
+            </button>
             <button
               className="refresh-button action-bar-text"
               onClick={refreshWishlist}
@@ -55,6 +87,7 @@ const Demo = () => {
           </ul>
         </div>
         <div className="wishlist">
+          {isLoading && <Loader />}
           <table className="table-content">
             <thead>
               <tr>
@@ -65,7 +98,7 @@ const Demo = () => {
                 <th>Delete</th>
               </tr>
             </thead>
-            {isLoading && <Loader />}
+
             <tbody>
               {wishlist.map((item) => {
                 return (
