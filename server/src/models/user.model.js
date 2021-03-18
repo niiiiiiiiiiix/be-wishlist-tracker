@@ -6,14 +6,14 @@ const wishlistSchema = new mongoose.Schema({
   productLink: {
     type: String,
     required: true,
-    unique: true,
-    sparse: true,
+    // unique: true,
+    // sparse: true,
   },
   productName: {
     type: String,
     required: true,
-    unique: true,
-    sparse: true,
+    // unique: true,
+    // sparse: true,
   },
   originalPrice: {
     type: String,
