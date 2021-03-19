@@ -2,26 +2,26 @@ import { React, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./NavBar.css";
-// import axios from "axios";
+import axios from "axios";
 
 function NavBar() {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-  // const logUserOut = () => {
-  //   axios
-  //     .post("http://localhost:5000/user/logout", {
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       console.log(response);
-  //       alert("Log out success!");
-  //     })
-  //     .catch((error) => {
-  //       console.error();
-  //     });
-  // };
+  const logUserOut = () => {
+    axios
+      .post("http://localhost:5000/user/logout", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        alert("Log out success!");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="navbar">
@@ -70,11 +70,11 @@ function NavBar() {
               Login
             </Link>
           </li>
-          {/* <li className="nav-item">
-            <Link to="/login" className="nav-links logout" onClick={logUserOut}>
+          <li className="nav-item">
+            <Link className="nav-links logout" onClick={logUserOut}>
               Logout
             </Link>
-          </li> */}
+          </li>
         </ul>
       </div>
     </div>

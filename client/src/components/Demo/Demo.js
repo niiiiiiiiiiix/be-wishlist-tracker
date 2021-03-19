@@ -32,9 +32,9 @@ const Demo = () => {
 
   function removeFromWishlist(id) {
     // useful link = https://www.robinwieruch.de/react-remove-item-from-list
-    console.log(id);
+    // console.log(id);
     const newWishlist = wishlist.filter((item) => item._id !== id);
-    console.log(newWishlist);
+    // console.log(newWishlist);
     axios
       .delete(`${URL}/${id}`, { withCredentials: true })
       .then(() => {
