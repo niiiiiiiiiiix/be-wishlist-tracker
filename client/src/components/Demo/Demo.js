@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "./Loader";
 
 // const URL = "http://localhost:5000/user/wishlist";
-const URL = "https://wishlist-tracker.herokuapp.com/wishlist";
+const URL = "https://wishlist-tracker.herokuapp.com/user/wishlist";
 
 const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
