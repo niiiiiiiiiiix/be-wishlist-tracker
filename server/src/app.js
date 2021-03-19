@@ -7,9 +7,10 @@ app.use(express.json());
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
+let FRONTEND_URL = "https://wishlist-tracker.netlify.app/";
 let corsOptions = {
-  origin: process.env.PORT || "http://localhost:3000",
-  // origin: process.env.<https://xxx.netlify.app> || "http://localhost:4000",
+  // origin: process.env.PORT || "http://localhost:3000",
+  origin: process.env.FRONTEND_URL || "http://localhost:4000",
   credentials: true,
 };
 const cors = require("cors");
