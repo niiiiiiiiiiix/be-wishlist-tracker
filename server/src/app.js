@@ -8,7 +8,8 @@ const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
 let corsOptions = {
-  origin: "http://localhost:4000",
+  origin: process.env.PORT || "http://localhost:4000",
+  // origin: process.env.<https://xxx.netlify.app> || "http://localhost:4000",
   credentials: true,
 };
 const cors = require("cors");
