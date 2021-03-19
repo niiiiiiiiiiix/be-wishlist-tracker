@@ -30,7 +30,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:5000",
+  "proxy": "https://wishlist-tracker.netlify.app/",
   "eslintConfig": {
     "extends": [
       "react-app",
