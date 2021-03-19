@@ -22,8 +22,8 @@ user.get("/", (req, res, next) => {
 });
 
 user.post("/signup", async (req, res, next) => {
-  username = req.body.username;
-  password = req.body.password;
+  // username = req.body.username;
+  // password = req.body.password;
   try {
     const user = new UserModel(req.body);
     const newUser = await user.save();
