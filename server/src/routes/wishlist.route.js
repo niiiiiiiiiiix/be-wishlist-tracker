@@ -11,7 +11,10 @@ const axios = require("axios");
 // wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
-    let browser = await puppeteer.launch();
+    let browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox"],
+    });
     let page = await browser.newPage();
 
     let pageUrl = req.body.url;
