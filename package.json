@@ -1,0 +1,10 @@
+{
+  "name": "blah",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "start": "npm run start --prefix ./server",
+    "test": " npm run test --prefix ./server",
+    "install": "npm install --prefix ./server"
+  }
+}
