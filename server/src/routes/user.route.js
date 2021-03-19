@@ -17,6 +17,10 @@ user.use(
   wishlist
 );
 
+user.get("/", (req, res, next) => {
+  res.send("Welcome!");
+});
+
 user.post("/signup", async (req, res, next) => {
   username = req.body.username;
   password = req.body.password;
