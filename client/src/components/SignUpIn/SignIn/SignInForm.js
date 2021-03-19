@@ -3,8 +3,11 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const SignInForm = () => {
+  const history = useHistory();
+
   return (
     <Formik
       initialValues={{
@@ -25,6 +28,7 @@ const SignInForm = () => {
           .then((response) => {
             console.log(response);
             alert("Log in success!");
+            history.push("/wishlist");
           })
           .catch((error) => {
             alert("Error! Please try a different username or password!");
