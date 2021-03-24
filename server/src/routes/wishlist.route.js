@@ -165,8 +165,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         });
       }
     }
-    // console.log("***********");
-    // console.log(results);
+
     await User.updateOne(
       { username: req.user.username },
       {
@@ -176,71 +175,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       }
     );
 
-    // const wishlistItems = await User.aggregate(aggregateArray);
-    // testArray = [];
-    // let browser = await puppeteer.launch({ headless: true });
-    // for (let i = 0; i < wishlistItems.length; i++) {
-    //   let page = await browser.newPage();
-
-    //   let pageUrl = wishlistItems[i].productLink;
-
-    //   await page.setRequestInterception(true);
-
-    //   page.on("request", (req) => {
-    //     if (
-    //       req.resourceType() == "stylesheet" ||
-    //       req.resourceType() == "font" ||
-    //       req.resourceType() == "media" ||
-    //       req.resourceType() == "image"
-    //     ) {
-    //       req.abort();
-    //     } else {
-    //       req.continue();
-    //     }
-    //   });
-
-    //   await page.goto(pageUrl, {
-    //     waitUntil: "domcontentloaded",
-    //   });
-
-    //   let revisedItemDetails = await page.evaluate(async () => {
-    //     let productLink = window.location.href;
-    //     let productName = document.querySelector(".product-name").innerText;
-    //     let originalPrice = document.querySelector(".price-standard").innerText;
-    //     let salesPrice = document
-    //       .querySelector(".price-sales")
-    //       .innerText.trim();
-    //     let date = new Date();
-    //     let lastUpdated = date.toLocaleString("en-GB", {
-    //       day: "2-digit",
-    //       month: "short",
-    //       year: "numeric",
-    //       hour: "2-digit",
-    //       minute: "2-digit",
-    //       second: "2-digit",
-    //     });
-    //     return {
-    //       productLink,
-    //       productName,
-    //       originalPrice,
-    //       salesPrice,
-    //       lastUpdated,
-    //     };
-    //   });
-
-    //   await testArray.push(revisedItemDetails);
-    //   await page.close();
-    // }
-    // await browser.close();
-
-    // await User.updateOne(
-    //   { username: req.user.username },
-    //   {
-    //     $set: {
-    //       wishlist: testArray,
-    //     },
-    //   }
-    // );
     const updatedWishlist = await User.aggregate(aggregateArray);
     res.status(200).json(updatedWishlist);
   } catch (err) {
