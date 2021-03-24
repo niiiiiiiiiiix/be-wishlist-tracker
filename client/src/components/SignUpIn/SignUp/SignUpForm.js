@@ -29,7 +29,7 @@ const SignUpForm = () => {
         // swal("SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4));
         // console.log(values);
         axios
-          .post("https://wishlist-tracker.herokuapp.com/user/signup", values)
+          .post(`${process.env.REACT_APP_API_URL}/user/signup`, values)
           .then((response) => {
             console.log(response);
             alert("Sign up success!");

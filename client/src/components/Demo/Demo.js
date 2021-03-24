@@ -5,7 +5,7 @@ import axios from "axios";
 import Loader from "./Loader";
 
 // const URL = "http://localhost:5000/user/wishlist";
-const URL = "https://wishlist-tracker.herokuapp.com/user/wishlist";
+// const URL = "https://wishlist-tracker.herokuapp.com/user/wishlist";
 
 const Demo = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +15,7 @@ const Demo = () => {
   function addToWishlist() {
     axios
       .post(
-        URL,
+        `${process.env.REACT_APP_API_URL}/user/wishlist`,
         {
           url: urlInput.current.value,
         },
@@ -37,7 +37,9 @@ const Demo = () => {
     const newWishlist = wishlist.filter((item) => item._id !== id);
     // console.log(newWishlist);
     axios
-      .delete(`${URL}/${id}`, { withCredentials: true })
+      .delete(`${process.env.REACT_APP_API_URL}/user/wishlist/${id}`, {
+        withCredentials: true,
+      })
       .then(() => {
         setWishlist(newWishlist);
       })
@@ -49,7 +51,7 @@ const Demo = () => {
   function refreshWishlist() {
     setIsLoading(true);
     axios
-      .get(URL, {
+      .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
         withCredentials: true,
       })
       .then((response) => {

@@ -11,7 +11,7 @@ function NavBar() {
   const closeMobileMenu = () => setClick(false);
   const logUserOut = () => {
     axios
-      .post("https://wishlist-tracker.herokuapp.com/user/logout", {
+      .post(`${process.env.REACT_APP_API_URL}/user/logout`, {
         withCredentials: true,
       })
       .then((response) => {

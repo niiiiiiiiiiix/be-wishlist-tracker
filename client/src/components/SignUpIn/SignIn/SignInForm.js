@@ -7,7 +7,8 @@ import { useHistory } from "react-router-dom";
 
 const SignInForm = () => {
   const history = useHistory();
-
+  console.log(process.env.REACT_APP_API_URL);
+  console.log(process.env);
   return (
     <Formik
       initialValues={{
@@ -22,7 +23,7 @@ const SignInForm = () => {
       })}
       onSubmit={(values) => {
         axios
-          .post("https://wishlist-tracker.herokuapp.com/user/login", values, {
+          .post(`${process.env.REACT_APP_API_URL}/user/login`, values, {
             withCredentials: true,
           })
           .then((response) => {
