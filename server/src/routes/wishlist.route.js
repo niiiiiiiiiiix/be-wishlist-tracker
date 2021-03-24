@@ -7,6 +7,7 @@ const User = require("../models/user.model");
 
 const puppeteer = require("puppeteer");
 const axios = require("axios");
+const cheerio = require("cheerio");
 
 // wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.post("/", protectRoute, async (req, res, next) => {
@@ -119,70 +120,127 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
-    testArray = [];
-    let browser = await puppeteer.launch({ headless: true });
+    results = [];
     for (let i = 0; i < wishlistItems.length; i++) {
-      let page = await browser.newPage();
+      let SCRAPING_URL = wishlistItems[i].productLink;
 
-      let pageUrl = wishlistItems[i].productLink;
+      const response = await axios
+        .get(SCRAPING_URL)
+        .then((res) => res.data)
+        .catch((err) => console.log(err));
 
-      await page.setRequestInterception(true);
+      const $ = cheerio.load(response);
 
-      page.on("request", (req) => {
-        if (
-          req.resourceType() == "stylesheet" ||
-          req.resourceType() == "font" ||
-          req.resourceType() == "media" ||
-          req.resourceType() == "image"
-        ) {
-          req.abort();
-        } else {
-          req.continue();
-        }
+      const date = new Date();
+      const lastUpdated = date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
 
-      await page.goto(pageUrl, {
-        waitUntil: "domcontentloaded",
-      });
-
-      let revisedItemDetails = await page.evaluate(async () => {
-        let productLink = window.location.href;
-        let productName = document.querySelector(".product-name").innerText;
-        let originalPrice = document.querySelector(".price-standard").innerText;
-        let salesPrice = document
-          .querySelector(".price-sales")
-          .innerText.trim();
-        let date = new Date();
-        let lastUpdated = date.toLocaleString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit",
+      let productLink = SCRAPING_URL;
+      let productName = $(".product-name").text();
+      if ($(".price-standard").text().trim() === "") {
+        let originalPrice = $(".price-sales").text().trim();
+        let salesPrice = "N/A";
+        results.push({
+          productLink: productLink,
+          productName: productName,
+          originalPrice: originalPrice,
+          salesPrice: salesPrice,
+          lastUpdated: lastUpdated,
         });
-        return {
-          productLink,
-          productName,
-          originalPrice,
-          salesPrice,
-          lastUpdated,
-        };
-      });
-
-      await testArray.push(revisedItemDetails);
-      await page.close();
+      } else {
+        let originalPrice = $(".price-standard").text().trim();
+        let salesPrice = $(".price-sales").text().trim();
+        results.push({
+          productLink: productLink,
+          productName: productName,
+          originalPrice: originalPrice,
+          salesPrice: salesPrice,
+          lastUpdated: lastUpdated,
+        });
+      }
     }
-    await browser.close();
-
+    // console.log("***********");
+    // console.log(results);
     await User.updateOne(
       { username: req.user.username },
       {
         $set: {
-          wishlist: testArray,
+          wishlist: results,
         },
       }
     );
+
+    // const wishlistItems = await User.aggregate(aggregateArray);
+    // testArray = [];
+    // let browser = await puppeteer.launch({ headless: true });
+    // for (let i = 0; i < wishlistItems.length; i++) {
+    //   let page = await browser.newPage();
+
+    //   let pageUrl = wishlistItems[i].productLink;
+
+    //   await page.setRequestInterception(true);
+
+    //   page.on("request", (req) => {
+    //     if (
+    //       req.resourceType() == "stylesheet" ||
+    //       req.resourceType() == "font" ||
+    //       req.resourceType() == "media" ||
+    //       req.resourceType() == "image"
+    //     ) {
+    //       req.abort();
+    //     } else {
+    //       req.continue();
+    //     }
+    //   });
+
+    //   await page.goto(pageUrl, {
+    //     waitUntil: "domcontentloaded",
+    //   });
+
+    //   let revisedItemDetails = await page.evaluate(async () => {
+    //     let productLink = window.location.href;
+    //     let productName = document.querySelector(".product-name").innerText;
+    //     let originalPrice = document.querySelector(".price-standard").innerText;
+    //     let salesPrice = document
+    //       .querySelector(".price-sales")
+    //       .innerText.trim();
+    //     let date = new Date();
+    //     let lastUpdated = date.toLocaleString("en-GB", {
+    //       day: "2-digit",
+    //       month: "short",
+    //       year: "numeric",
+    //       hour: "2-digit",
+    //       minute: "2-digit",
+    //       second: "2-digit",
+    //     });
+    //     return {
+    //       productLink,
+    //       productName,
+    //       originalPrice,
+    //       salesPrice,
+    //       lastUpdated,
+    //     };
+    //   });
+
+    //   await testArray.push(revisedItemDetails);
+    //   await page.close();
+    // }
+    // await browser.close();
+
+    // await User.updateOne(
+    //   { username: req.user.username },
+    //   {
+    //     $set: {
+    //       wishlist: testArray,
+    //     },
+    //   }
+    // );
     const updatedWishlist = await User.aggregate(aggregateArray);
     res.status(200).json(updatedWishlist);
   } catch (err) {

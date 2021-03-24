@@ -55,12 +55,13 @@ user.post("/login", async (req, res, next) => {
     res.cookie("token", token, {
       expires: expiryDate,
       httpOnly: true, // client-side js cannot access cookie info
-      secure: true, // use HTTPS / comment out when testing locally
-      sameSite: "none", // comment out when testing locally
+      // secure: true, // use HTTPS / comment out when testing locally
+      // sameSite: "none", // comment out when testing locally
     });
 
     res.send("You are now logged in!");
   } catch (err) {
+    console.log(err);
     if (err.message === "Login failed") {
       err.statusCode = 400;
     }
