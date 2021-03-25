@@ -7,7 +7,7 @@ import Loader from "./Loader";
 // const URL = "http://localhost:5000/user/wishlist";
 // const URL = "https://wishlist-tracker.herokuapp.com/user/wishlist";
 
-const Demo = () => {
+const Wishlist = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
 
@@ -67,14 +67,15 @@ const Demo = () => {
   useEffect(() => {
     setIsLoading(true);
     axios
-      .get(URL, {
+      .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
         withCredentials: true,
       })
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
+        console.log(response.data);
       })
-      // .then((response) => console.log(response.data));
+
       .catch((error) => {
         console.log(error);
       });
@@ -145,4 +146,4 @@ const Demo = () => {
   );
 };
 
-export default Demo;
+export default Wishlist;

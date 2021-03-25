@@ -71,7 +71,7 @@ function NavBar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-links logout" onClick={logUserOut}>
+            <Link to="/" className="nav-links logout" onClick={logUserOut}>
               Logout
             </Link>
           </li>

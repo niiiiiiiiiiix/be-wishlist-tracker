@@ -7,8 +7,8 @@ import { useHistory } from "react-router-dom";
 
 const SignInForm = () => {
   const history = useHistory();
-  console.log(process.env.REACT_APP_API_URL);
-  console.log(process.env);
+  // console.log(process.env.REACT_APP_API_URL);
+  // console.log(process.env);
   return (
     <Formik
       initialValues={{
