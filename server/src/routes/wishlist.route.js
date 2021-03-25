@@ -1,15 +1,10 @@
 const express = require("express");
 const wishlist = express.Router({ mergeParams: true });
-// const jsonContent = require("../middleware/requireJSONcontent");
 const protectRoute = require("../middleware/protectRoute");
-// const correctUser = require("../middleware/correctUser");
 const User = require("../models/user.model");
-
-const puppeteer = require("puppeteer");
 const axios = require("axios");
 const cheerio = require("cheerio");
 
-// wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
     results = [];
@@ -94,12 +89,10 @@ wishlist.delete("/:id", protectRoute, async (req, res, next) => {
   }
 });
 
-// wishlist.get("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.get("/", protectRoute, async (req, res, next) => {
   let aggregateArray = [
     {
       $match: {
-        // username: req.username,
         username: req.user.username,
       },
     },
