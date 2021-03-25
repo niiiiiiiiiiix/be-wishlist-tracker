@@ -67,8 +67,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
 
 wishlist.delete("/:id", protectRoute, async (req, res, next) => {
   try {
-    console.log(req.user.username);
-    console.log(req.params.id);
     const wishlist = await User.updateOne(
       { username: req.user.username, "wishlist._id": req.params.id },
       {
