@@ -2,7 +2,6 @@ const express = require("express");
 const user = express.Router();
 const UserModel = require("../models/user.model");
 const protectRoute = require("../middleware/protectRoute");
-const correctUser = require("../middleware/correctUser");
 const bcrypt = require("bcryptjs");
 const createJWTToken = require("../config/jwt");
 const wishlist = require("./wishlist.route");

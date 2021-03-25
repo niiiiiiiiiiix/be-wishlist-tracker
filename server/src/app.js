@@ -18,9 +18,6 @@ app.use(cors(corsOptions));
 const userRouter = require("./routes/user.route");
 app.use("/user", userRouter);
 
-// const wishlistRouter = require("./routes/wishlist.route");
-// app.use("/wishlist", wishlistRouter);
-
 app.use((err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
   res.status(err.statusCode).send(err.message);

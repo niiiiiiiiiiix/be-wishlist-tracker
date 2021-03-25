@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-// const wishlist = require("./wishlist.model")
 
 const wishlistSchema = new mongoose.Schema({
   productLink: {
