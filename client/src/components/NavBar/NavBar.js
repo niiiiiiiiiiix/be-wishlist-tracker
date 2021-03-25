@@ -9,6 +9,7 @@ function NavBar() {
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
   const logUserOut = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/user/logout`, {
@@ -19,6 +20,7 @@ function NavBar() {
         alert("Log out success!");
       })
       .catch((error) => {
+        console.log("HI WHY IS THIS AN ERROR");
         console.log(error);
       });
   };

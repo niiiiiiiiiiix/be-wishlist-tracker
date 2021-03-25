@@ -11,8 +11,27 @@ const Wishlist = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
 
+  useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        setIsLoading(false);
+        setWishlist(response.data);
+        console.log(response.data);
+      })
+
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
   let urlInput = React.createRef();
   function addToWishlist() {
+    console.log(urlInput.current.value);
+    console.log(`${process.env.REACT_APP_API_URL}/user/wishlist`);
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/user/wishlist`,
@@ -24,7 +43,7 @@ const Wishlist = () => {
         }
       )
       .then((item) => {
-        setWishlist((wishlist) => [...wishlist, item.data]);
+        setWishlist([...wishlist, ...item.data]);
       })
       .catch((error) => {
         console.log(error);
@@ -63,23 +82,6 @@ const Wishlist = () => {
         console.log(error);
       });
   }
-
-  useEffect(() => {
-    setIsLoading(true);
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
-        withCredentials: true,
-      })
-      .then((response) => {
-        setIsLoading(false);
-        setWishlist(response.data);
-        console.log(response.data);
-      })
-
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
 
   return (
     <div className="bodyy">
