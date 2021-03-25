@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Demo.css";
+import "./Wishlist.css";
 import { ImCross } from "react-icons/im";
 import axios from "axios";
 import Loader from "./Loader";
