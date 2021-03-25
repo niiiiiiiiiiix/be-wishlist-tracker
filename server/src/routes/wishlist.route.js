@@ -4,6 +4,7 @@ const protectRoute = require("../middleware/protectRoute");
 const User = require("../models/user.model");
 const axios = require("axios");
 const cheerio = require("cheerio");
+const ObjectId = require("mongodb").ObjectId;
 
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
@@ -27,12 +28,14 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
       second: "2-digit",
     });
 
+    let productID = ObjectId();
     let productLink = SCRAPING_URL;
     let productName = $(".product-name").text();
     if ($(".price-standard").text().trim() === "") {
       let originalPrice = $(".price-sales").text().trim();
       let salesPrice = "N/A";
       results.push({
+        _id: productID,
         productLink: productLink,
         productName: productName,
         originalPrice: originalPrice,
@@ -43,6 +46,7 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
       let originalPrice = $(".price-standard").text().trim();
       let salesPrice = $(".price-sales").text().trim();
       results.push({
+        _id: productID,
         productLink: productLink,
         productName: productName,
         originalPrice: originalPrice,

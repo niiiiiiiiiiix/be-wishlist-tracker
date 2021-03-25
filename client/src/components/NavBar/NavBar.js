@@ -11,10 +11,15 @@ function NavBar() {
   const closeMobileMenu = () => setClick(false);
 
   const logUserOut = () => {
+    console.log(`${process.env.REACT_APP_API_URL}/user/logout`);
     axios
-      .post(`${process.env.REACT_APP_API_URL}/user/logout`, {
-        withCredentials: true,
-      })
+      .post(
+        `${process.env.REACT_APP_API_URL}/user/logout`,
+        "need some data here if u want config",
+        {
+          withCredentials: true,
+        }
+      )
       .then((response) => {
         console.log(response);
         alert("Log out success!");

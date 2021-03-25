@@ -20,7 +20,7 @@ const Wishlist = () => {
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
 
       .catch((error) => {
@@ -29,9 +29,9 @@ const Wishlist = () => {
   }, []);
 
   let urlInput = React.createRef();
+
   function addToWishlist() {
-    console.log(urlInput.current.value);
-    console.log(`${process.env.REACT_APP_API_URL}/user/wishlist`);
+    setIsLoading(true);
     axios
       .post(
         `${process.env.REACT_APP_API_URL}/user/wishlist`,
@@ -43,10 +43,12 @@ const Wishlist = () => {
         }
       )
       .then((item) => {
+        setIsLoading(false);
         setWishlist([...wishlist, ...item.data]);
       })
       .catch((error) => {
         console.log(error);
+        alert("Invalid URL");
       });
   }
 
@@ -76,7 +78,7 @@ const Wishlist = () => {
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         console.log(error);
