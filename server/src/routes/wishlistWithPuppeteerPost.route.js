@@ -1,10 +1,7 @@
 const express = require("express");
 const wishlist = express.Router({ mergeParams: true });
-// const jsonContent = require("../middleware/requireJSONcontent");
 const protectRoute = require("../middleware/protectRoute");
-// const correctUser = require("../middleware/correctUser");
 const User = require("../models/user.model");
-
 const puppeteer = require("puppeteer");
 const axios = require("axios");
 const cheerio = require("cheerio");
@@ -12,68 +9,68 @@ const cheerio = require("cheerio");
 // wishlist.post("/", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
-    results = [];
-    let SCRAPING_URL = req.body.url;
+    let browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox"],
+    });
+    let page = await browser.newPage();
 
-    const response = await axios
-      .get(SCRAPING_URL)
-      .then((res) => res.data)
-      .catch((err) => console.log(err));
+    let pageUrl = req.body.url;
 
-    const $ = cheerio.load(response);
+    // -- by using the following:
+    // let pageUrl = await Object.values(req.body);
+    // let finalPageUrl = pageUrl[0];
+    // await page.goto(finalPageUrl);
+    // -- we are allowing the user to pass in as many key/values
+    // -- when they should only be passing in 1 field
+    // -- and it should be specifically "url" key
 
-    const date = new Date();
-    const lastUpdated = date.toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
+    await page.goto(pageUrl, {
+      waitUntil: "domcontentloaded",
     });
 
-    let productLink = SCRAPING_URL;
-    let productName = $(".product-name").text();
-    if ($(".price-standard").text().trim() === "") {
-      let originalPrice = $(".price-sales").text().trim();
-      let salesPrice = "N/A";
-      results.push({
-        productLink: productLink,
-        productName: productName,
-        originalPrice: originalPrice,
-        salesPrice: salesPrice,
-        lastUpdated: lastUpdated,
+    let itemDetails = await page.evaluate(async () => {
+      let productLink = window.location.href;
+      let productName = document.querySelector(".product-name").innerText;
+      let originalPrice = document.querySelector(".price-standard").innerText;
+      let salesPrice = document.querySelector(".price-sales").innerText.trim();
+      const date = new Date();
+      const lastUpdated = date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
       });
-    } else {
-      let originalPrice = $(".price-standard").text().trim();
-      let salesPrice = $(".price-sales").text().trim();
-      results.push({
-        productLink: productLink,
-        productName: productName,
-        originalPrice: originalPrice,
-        salesPrice: salesPrice,
-        lastUpdated: lastUpdated,
-      });
-    }
 
+      return {
+        productLink,
+        productName,
+        originalPrice,
+        salesPrice,
+        lastUpdated,
+      };
+    });
+
+    await browser.close();
     await User.updateOne(
       { username: req.user.username },
       {
         $addToSet: {
-          wishlist: results,
+          wishlist: itemDetails,
         },
       }
     );
-    res.status(201).json(results);
+    res.status(201).json(itemDetails);
   } catch (err) {
     next(err);
   }
 });
 
+// wishlist.delete("/:id", [protectRoute, correctUser], async (req, res, next) => {
 wishlist.delete("/:id", protectRoute, async (req, res, next) => {
   try {
-    console.log(req.user.username);
-    console.log(req.params.id);
     const wishlist = await User.updateOne(
       { username: req.user.username, "wishlist._id": req.params.id },
       {
