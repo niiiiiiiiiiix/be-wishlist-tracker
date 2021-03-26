@@ -3,12 +3,15 @@ import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./NavBar.css";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function NavBar() {
   const [click, setClick] = useState(false);
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
+
+  const history = useHistory();
 
   const logUserOut = () => {
     console.log(`${process.env.REACT_APP_API_URL}/user/logout`);
@@ -23,6 +26,7 @@ function NavBar() {
       .then((response) => {
         console.log(response);
         alert("Log out success!");
+        history.push("/");
       })
       .catch((error) => {
         console.log("HI WHY IS THIS AN ERROR");
@@ -78,7 +82,7 @@ function NavBar() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/" className="nav-links logout" onClick={logUserOut}>
+            <Link to="#" className="nav-links logout" onClick={logUserOut}>
               Logout
             </Link>
           </li>
