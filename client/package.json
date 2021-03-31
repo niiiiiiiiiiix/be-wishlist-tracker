@@ -32,7 +32,10 @@
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
-    "extends": "eslint:recommended",
+    "extends": [
+      "eslint:recommended",
+      "react-app"
+    ],
     "env": {
       "node": true,
       "es6": true,
@@ -42,11 +45,7 @@
       "react": {
         "version": "latest"
       }
-    },
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    }
   },
   "browserslist": {
     "production": [

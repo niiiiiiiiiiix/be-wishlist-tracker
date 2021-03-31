@@ -20,11 +20,6 @@
       "es6": true,
       "jest": true
     },
-    "settings": {
-      "react": {
-        "version": "latest"
-      }
-    },
     "parserOptions": {
       "ecmaVersion": 12
     },
