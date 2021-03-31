@@ -14,6 +14,11 @@
     "start:dev": "nodemon src/index.js"
   },
   "eslintConfig": {
+    "env": {
+      "node": true,
+      "es6": true,
+      "jest": true
+    },
     "settings": {
       "react": {
         "version": "latest"
@@ -24,9 +29,7 @@
     },
     "rules": {
       "no-unused-vars": ["error",{"argsIgnorePattern":"next"}]
-      
     }
-    
   },
   "keywords": [],
   "author": "",
