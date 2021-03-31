@@ -4,3 +4,4 @@
 echo " [Husky] pre-commit"
 npm run lint-client
 npm run lint-server
+npm run test
