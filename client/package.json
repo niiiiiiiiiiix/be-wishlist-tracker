@@ -32,6 +32,7 @@
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
+    "extends": "eslint:recommended",
     "env": {
       "node": true,
       "es6": true,
