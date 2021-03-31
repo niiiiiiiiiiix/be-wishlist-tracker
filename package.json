@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npm run start --prefix ./server",
     "test": " npm run test --prefix ./server",
-    "install": "npm install --prefix ./server"
+    "install": "npm install --prefix ./server",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "husky": "^6.0.0"
