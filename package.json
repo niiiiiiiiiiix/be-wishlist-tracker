@@ -6,9 +6,13 @@
     "start": "npm run start --prefix ./server",
     "test": " npm run test --prefix ./server",
     "install": "npm install --prefix ./server",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint-client": "eslint client",
+    "lint-server": "eslint server"
   },
   "devDependencies": {
-    "husky": "^6.0.0"
+    "eslint": "^7.23.0",
+    "husky": "^6.0.0",
+    "prettier": "^2.2.1"
   }
 }

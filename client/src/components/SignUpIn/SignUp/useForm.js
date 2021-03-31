@@ -32,7 +32,7 @@ const useForm = (callback, validate) => {
     if (Object.keys(errors).length === 0 && submitting) {
       callback();
     }
-  }, [errors]);
+  });
 
   return {
     handleChange,

@@ -1,13 +1,14 @@
 const request = require("supertest");
 const app = require("../src/app");
-const User = require("../src/models/user.model");
+// const User = require("../src/models/user.model");
 const dbHandlers = require("../test/dbHandler");
 const createJWTToken = require("../src/config/jwt");
 
 describe("User", () => {
   beforeAll(async () => {
     await dbHandlers.connect();
-    token = createJWTToken("user.username");
+    // token = createJWTToken("user.username");
+    createJWTToken("user.username");
   });
 
   // beforeEach(async () => {

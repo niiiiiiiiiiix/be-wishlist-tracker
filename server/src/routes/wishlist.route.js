@@ -8,7 +8,7 @@ const ObjectId = require("mongodb").ObjectId;
 
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
-    results = [];
+    let results = [];
     let SCRAPING_URL = req.body.url;
 
     const response = await axios
@@ -115,7 +115,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
-    results = [];
+    let results = [];
     for (let i = 0; i < wishlistItems.length; i++) {
       let SCRAPING_URL = wishlistItems[i].productLink;
 

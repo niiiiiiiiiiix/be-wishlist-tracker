@@ -2,4 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 echo " [Husky] pre-commit"
-
+npm run lint-client
+npm run lint-server
