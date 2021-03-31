@@ -7,11 +7,6 @@
     "test": " npm run test --prefix ./server",
     "install": "npm install --prefix ./server"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo \"[Husky] pre-commit\""
-    }
-  },
   "devDependencies": {
     "husky": "^6.0.0"
   }
