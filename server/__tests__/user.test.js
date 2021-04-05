@@ -26,7 +26,7 @@ describe("User", () => {
     const user = { username: "admin001", password: "admin001" };
     it("should create new user", async () => {
       const response = await request(app).post("/user/signup").send(user);
-      console.log(response);
+      // console.log(response);
       expect(response.status).toEqual(201);
       expect(response.body.username).toEqual(user.username);
       expect(
