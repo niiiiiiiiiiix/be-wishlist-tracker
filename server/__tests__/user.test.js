@@ -47,5 +47,10 @@ describe("User", () => {
       const response = await request(app).post("/user/signup").send(user);
       expect(response.status).toEqual(400);
     });
+    it("should not allow a username under 8 characters", async () => {
+      const user = { username: "admin03", password: "admin003" };
+      const response = await request(app).post("/user/signup").send(user);
+      expect(response.status).toEqual(400);
+    });
   });
 });
