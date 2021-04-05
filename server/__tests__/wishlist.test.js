@@ -49,5 +49,12 @@ describe("Wishlist", () => {
         .set("Cookie", `token=${token}`);
       expect(response.status).toEqual(400);
     });
+    it("(unauthorised) should throw error", async () => {
+      const body = {
+        url: itemUrl,
+      };
+      const response = await request(app).post("/user/wishlist").send(body);
+      expect(response.status).toEqual(401);
+    });
   });
 });
