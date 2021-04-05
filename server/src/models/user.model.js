@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { secret } = require("../config/secret");
 
 const wishlistSchema = new mongoose.Schema({
   productLink: {
@@ -51,6 +53,18 @@ userSchema.pre("save", async function () {
     this.password = await bcrypt.hash(this.password, rounds);
   }
 });
+
+userSchema.methods.generateJWT = function () {
+  return jwt.sign(
+    {
+      username: this.username,
+    },
+    secret,
+    {
+      expiresIn: "7d",
+    }
+  );
+};
 
 const User = mongoose.model("User", userSchema);
 
