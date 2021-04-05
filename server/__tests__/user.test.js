@@ -37,5 +37,10 @@ describe("User", () => {
       ).toEqual(true);
       expect(response.body.wishlist).toEqual([]);
     });
+    it("should not allow a duplicate username to be created", async () => {
+      const user = { username: "admin001", password: "admin001" };
+      const response = await request(app).post("/user/signup").send(user);
+      expect(response.status).toEqual(400);
+    });
   });
 });
