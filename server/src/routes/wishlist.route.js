@@ -24,7 +24,8 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
     const response = await axios
       .get(SCRAPING_URL)
       .then((res) => res.data)
-      .catch((err) => console.log(err));
+      .catch((err) => err);
+    // .catch((err) => console.log(err));
 
     const $ = cheerio.load(response);
 
@@ -65,6 +66,7 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
     );
     res.status(201).json(results);
   } catch (err) {
+    err.statusCode = 400;
     next(err);
   }
 });
