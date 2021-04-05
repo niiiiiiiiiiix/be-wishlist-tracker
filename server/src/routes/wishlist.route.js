@@ -6,6 +6,16 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 const ObjectId = require("mongodb").ObjectId;
 
+let date = new Date();
+let lastUpdated = date.toLocaleString("en-GB", {
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+});
+
 wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
     let results = [];
@@ -17,16 +27,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
       .catch((err) => console.log(err));
 
     const $ = cheerio.load(response);
-
-    const date = new Date();
-    const lastUpdated = date.toLocaleString("en-GB", {
-      day: "2-digit",
-      month: "short",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    });
 
     let productID = ObjectId();
     let productLink = SCRAPING_URL;
@@ -125,16 +125,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         .catch((err) => console.log(err));
 
       const $ = cheerio.load(response);
-
-      const date = new Date();
-      const lastUpdated = date.toLocaleString("en-GB", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-      });
 
       let productLink = SCRAPING_URL;
       let productName = $(".product-name").text();
