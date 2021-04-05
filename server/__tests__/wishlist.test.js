@@ -18,7 +18,7 @@ describe("Wishlist", () => {
   });
 
   describe("POST /user/wishlist", () => {
-    it("should respond with the newly added wishlist item", async () => {
+    it("(authorised) should respond with the newly added wishlist item", async () => {
       const body = {
         url: itemUrl,
       };
@@ -29,9 +29,19 @@ describe("Wishlist", () => {
       expect(response.status).toEqual(201);
       expect(response.body[0].productLink).toEqual(itemUrl);
     });
-    it("should respond with error message if url not valid", async () => {
+    it("(authorised) should respond with error message if url not valid", async () => {
       const body = {
         url: itemUrlInvalid,
+      };
+      const response = await request(app)
+        .post("/user/wishlist")
+        .send(body)
+        .set("Cookie", `token=${token}`);
+      expect(response.status).toEqual(400);
+    });
+    it("(authorised) should respond with error message if url is empty", async () => {
+      const body = {
+        url: "",
       };
       const response = await request(app)
         .post("/user/wishlist")
