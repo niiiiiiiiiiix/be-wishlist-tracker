@@ -29,7 +29,7 @@ user.post("/signup", async (req, res, next) => {
 
     res.status(201).send(newUser);
   } catch (err) {
-    // err.statusCode = 400;
+    err.statusCode = 400;
     // err.message = "Invalid username, please try again!";
     next(err);
   }

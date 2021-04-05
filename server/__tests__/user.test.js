@@ -42,5 +42,10 @@ describe("User", () => {
       const response = await request(app).post("/user/signup").send(user);
       expect(response.status).toEqual(400);
     });
+    it("should not allow a username with special characters", async () => {
+      const user = { username: "admin00!", password: "admin002" };
+      const response = await request(app).post("/user/signup").send(user);
+      expect(response.status).toEqual(400);
+    });
   });
 });
