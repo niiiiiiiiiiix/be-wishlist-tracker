@@ -1,7 +1,7 @@
 const request = require("supertest");
 const app = require("../src/app");
 const dbHandlers = require("../test/dbHandler");
-const createJWTToken = require("../src/config/jwt");
+const User = require("../src/models/user.model");
 
 describe("Wishlist", () => {
   let token;
@@ -10,10 +10,14 @@ describe("Wishlist", () => {
   let itemUrl2 =
     "https://cottonon.com/SG/dad-short-sleeve-shirt/2052019-04.html?dwvar_2052019-04_color=2052019-04&cgid=womens-shirts-blouses&originalPid=2052019-04#start=1";
   let itemUrlInvalid = "https://cottonon.com/SG/cindy-wide-leg-pant/";
+  const user = new User({ username: "username", password: "password" });
 
   beforeAll(async () => {
     await dbHandlers.connect();
-    token = createJWTToken("user.username");
+  });
+  beforeEach(async () => {
+    await user.save();
+    token = user.generateJWT();
   });
   afterAll(async () => {
     await dbHandlers.clearDatabase();
@@ -31,7 +35,6 @@ describe("Wishlist", () => {
         .set("Cookie", `token=${token}`);
       expect(response.status).toEqual(201);
       expect(response.body[0].productLink).toEqual(itemUrl);
-      // console.log(response.body);
     });
     it("(authorised) should respond with error message if url not valid", async () => {
       const body = {
@@ -60,32 +63,23 @@ describe("Wishlist", () => {
       const response = await request(app).post("/user/wishlist").send(body);
       expect(response.status).toEqual(401);
     });
+  });
 
-    describe("GET /user/wishlist/", () => {
-      it("(authorised) should return all items in wishlist", async () => {
-        const body = {
-          url: itemUrl,
-        };
-        const bodyText = await request(app)
-          .post("/user/wishlist")
-          .send(body)
-          .set("Cookie", `token=${token}`);
-        console.log(bodyText.body);
+  describe("GET /user/wishlist/", () => {
+    it("(authorised) should return all items in wishlist", async () => {
+      const body2 = {
+        url: itemUrl2,
+      };
+      await request(app)
+        .post("/user/wishlist")
+        .send(body2)
+        .set("Cookie", `token=${token}`);
 
-        const body2 = {
-          url: itemUrl2,
-        };
-        const bodyText2 = await request(app)
-          .post("/user/wishlist")
-          .send(body2)
-          .set("Cookie", `token=${token}`);
-        console.log(bodyText2.body);
+      const { body: wishlistItems } = await request(app)
+        .get("/user/wishlist")
+        .set("Cookie", `token=${token}`);
 
-        const response = await request(app)
-          .get("/user/wishlist")
-          .set("Cookie", `token=${token}`);
-        console.log(response.body);
-      });
+      expect(wishlistItems.length).toBe(2);
     });
   });
 });
