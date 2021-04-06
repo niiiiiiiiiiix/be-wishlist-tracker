@@ -60,7 +60,7 @@ function NavBar() {
               className="nav-links"
               onClick={closeMobileMenu}
             >
-              User_Home
+              Wishlist
             </Link>
           </li>
           <li className="nav-item">
