@@ -79,8 +79,8 @@ describe("Wishlist", () => {
       const response = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
-      console.log(response.body);
-      console.log("**************");
+      // console.log(response.body);
+      // console.log("**************");
       expect(response.body.length).toBe(2);
     });
   });
