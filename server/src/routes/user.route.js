@@ -60,7 +60,7 @@ user.post("/login", async (req, res, next) => {
 
     res.send("You are now logged in!");
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     if (err.message === "Login failed") {
       err.statusCode = 400;
     }
