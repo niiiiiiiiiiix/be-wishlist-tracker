@@ -99,5 +99,15 @@ describe("Wishlist", () => {
         .set("Cookie", `token=${token}`);
       expect(response.body).toEqual(expectedResponse);
     });
+    it("(unauthorised) should return error", async () => {
+      const items = await request(app)
+        .get("/user/wishlist")
+        .set("Cookie", `token=${token}`);
+      const firstItem = items.body[0];
+      const response = await request(app).delete(
+        `/user/wishlist/${firstItem._id}`
+      );
+      expect(response.status).toEqual(401);
+    });
   });
 });
