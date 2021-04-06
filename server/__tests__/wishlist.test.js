@@ -15,12 +15,10 @@ describe("Wishlist", () => {
 
   beforeAll(async () => {
     await dbHandlers.connect();
+    //   // linking token to user
     await user.save();
     token = user.generateJWT();
   });
-  // beforeEach(async () => {
-  //   // linking token to user
-  // });
   afterAll(async () => {
     await dbHandlers.clearDatabase();
     await dbHandlers.closeDatabase();
@@ -37,6 +35,17 @@ describe("Wishlist", () => {
         .set("Cookie", `token=${token}`);
       expect(response.status).toEqual(201);
       expect(response.body[0].productLink).toEqual(itemUrl);
+    });
+    it("(authorised) should respond with SECOND newly added wishlist item", async () => {
+      const body = {
+        url: itemUrl2,
+      };
+      const response = await request(app)
+        .post("/user/wishlist")
+        .send(body)
+        .set("Cookie", `token=${token}`);
+      expect(response.status).toEqual(201);
+      expect(response.body[0].productLink).toEqual(itemUrl2);
     });
     it("(authorised) should respond with error message if url not valid", async () => {
       const body = {
@@ -69,13 +78,6 @@ describe("Wishlist", () => {
 
   describe("GET /user/wishlist/", () => {
     it("(authorised) should return all items in wishlist", async () => {
-      const body = {
-        url: itemUrl2,
-      };
-      await request(app)
-        .post("/user/wishlist")
-        .send(body)
-        .set("Cookie", `token=${token}`);
       const response = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
