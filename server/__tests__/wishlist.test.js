@@ -79,8 +79,6 @@ describe("Wishlist", () => {
       const response = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
-      // console.log(response.body);
-      // console.log("**************");
       expect(response.body.length).toBe(2);
     });
     it("(unauthorised) should return error", async () => {
@@ -89,7 +87,17 @@ describe("Wishlist", () => {
     });
   });
 
-  // describe("DELETE /user/wishlist/:id", () => {
-  //   it("");
-  // });
+  describe("DELETE /user/wishlist/:id", () => {
+    it("(authorised) should delete particular item with id", async () => {
+      const items = await request(app)
+        .get("/user/wishlist")
+        .set("Cookie", `token=${token}`);
+      const firstItem = items.body[0];
+      const expectedResponse = { n: 1, nModified: 1, ok: 1 };
+      const response = await request(app)
+        .delete(`/user/wishlist/${firstItem._id}`)
+        .set("Cookie", `token=${token}`);
+      expect(response.body).toEqual(expectedResponse);
+    });
+  });
 });
