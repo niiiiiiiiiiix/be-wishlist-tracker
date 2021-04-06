@@ -88,7 +88,7 @@ const Wishlist = () => {
   return (
     <div className="bodyy">
       <div className="demo-container">
-        <h1>This is your demo page</h1>
+        <h1 className="wishlist-h1">This is your demo page</h1>
         <div>
           <ul className="action-bar">
             <input
