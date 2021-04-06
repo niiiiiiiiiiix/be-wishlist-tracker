@@ -83,5 +83,13 @@ describe("Wishlist", () => {
       // console.log("**************");
       expect(response.body.length).toBe(2);
     });
+    it("(unauthorised) should return error", async () => {
+      const response = await request(app).get("/user/wishlist");
+      expect(response.status).toEqual(401);
+    });
   });
+
+  // describe("DELETE /user/wishlist/:id", () => {
+  //   it("");
+  // });
 });
