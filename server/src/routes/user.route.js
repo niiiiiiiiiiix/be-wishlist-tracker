@@ -3,7 +3,7 @@ const user = express.Router();
 const UserModel = require("../models/user.model");
 const protectRoute = require("../middleware/protectRoute");
 const bcrypt = require("bcryptjs");
-const createJWTToken = require("../config/jwt");
+// const createJWTToken = require("../config/jwt");
 const wishlist = require("./wishlist.route");
 
 user.use(
@@ -45,7 +45,8 @@ user.post("/login", async (req, res, next) => {
       throw new Error("Login failed");
     }
 
-    const token = createJWTToken(user.username);
+    // const token = createJWTToken(user.username);
+    const token = user.generateJWT();
 
     const oneDay = 24 * 60 * 60 * 1000;
     const oneWeek = oneDay * 7;
