@@ -109,5 +109,5 @@ describe("Wishlist", () => {
       const response = await request(app).delete(`/user/wishlist/${firstItem}`);
       expect(response.status).toEqual(401);
     });
-  });
+  }, 15000);
 });
