@@ -9,3 +9,7 @@ function getJWTSecret() {
 module.exports = {
   secret: getJWTSecret(),
 };
+
+// newly added
+// extracted from jwt.js
+// createJWTToken moved to user.model.js

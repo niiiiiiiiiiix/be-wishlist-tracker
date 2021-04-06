@@ -11,6 +11,7 @@ describe("Wishlist", () => {
     "https://cottonon.com/SG/dad-short-sleeve-shirt/2052019-04.html?dwvar_2052019-04_color=2052019-04&cgid=womens-shirts-blouses&originalPid=2052019-04#start=1";
   let itemUrlInvalid = "https://cottonon.com/SG/cindy-wide-leg-pant/";
   const user = new User({ username: "username", password: "password" });
+  // create user so that we can tie the token to this user
 
   beforeAll(async () => {
     await dbHandlers.connect();
@@ -18,6 +19,7 @@ describe("Wishlist", () => {
   beforeEach(async () => {
     await user.save();
     token = user.generateJWT();
+    // linking token to user
   });
   afterAll(async () => {
     await dbHandlers.clearDatabase();
@@ -67,19 +69,19 @@ describe("Wishlist", () => {
 
   describe("GET /user/wishlist/", () => {
     it("(authorised) should return all items in wishlist", async () => {
-      const body2 = {
+      const body = {
         url: itemUrl2,
       };
       await request(app)
         .post("/user/wishlist")
-        .send(body2)
+        .send(body)
         .set("Cookie", `token=${token}`);
-
-      const { body: wishlistItems } = await request(app)
+      const response = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
-
-      expect(wishlistItems.length).toBe(2);
+      console.log(response.body);
+      console.log("**************");
+      expect(response.body.length).toBe(2);
     });
   });
 });

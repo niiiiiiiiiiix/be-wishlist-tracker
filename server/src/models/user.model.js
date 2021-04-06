@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { secret } = require("../config/secret");
+const jwt = require("jsonwebtoken"); // newly added
+const { secret } = require("../config/secret"); // newly added
 
 const wishlistSchema = new mongoose.Schema({
   productLink: {
@@ -54,6 +54,10 @@ userSchema.pre("save", async function () {
   }
 });
 
+// newly added
+// creation of the JWT token itself should be in one place only (user model)
+// instead of in jwt.js
+// where getJWTsecret is extracted into secret.js
 userSchema.methods.generateJWT = function () {
   return jwt.sign(
     {
@@ -65,6 +69,7 @@ userSchema.methods.generateJWT = function () {
     }
   );
 };
+// newly added
 
 const User = mongoose.model("User", userSchema);
 

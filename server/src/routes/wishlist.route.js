@@ -168,7 +168,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
     );
 
     const updatedWishlist = await User.aggregate(aggregateArray);
-    console.log(updatedWishlist);
+    // console.log(updatedWishlist);
     res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
