@@ -15,12 +15,12 @@ describe("Wishlist", () => {
 
   beforeAll(async () => {
     await dbHandlers.connect();
-  });
-  beforeEach(async () => {
     await user.save();
     token = user.generateJWT();
-    // linking token to user
   });
+  // beforeEach(async () => {
+  //   // linking token to user
+  // });
   afterAll(async () => {
     await dbHandlers.clearDatabase();
     await dbHandlers.closeDatabase();
