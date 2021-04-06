@@ -92,10 +92,10 @@ describe("Wishlist", () => {
       const items = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
-      const firstItem = items.body[0];
+      const firstItem = items.body[0]._id;
       const expectedResponse = { n: 1, nModified: 1, ok: 1 };
       const response = await request(app)
-        .delete(`/user/wishlist/${firstItem._id}`)
+        .delete(`/user/wishlist/${firstItem}`)
         .set("Cookie", `token=${token}`);
       expect(response.body).toEqual(expectedResponse);
     });
@@ -103,10 +103,8 @@ describe("Wishlist", () => {
       const items = await request(app)
         .get("/user/wishlist")
         .set("Cookie", `token=${token}`);
-      const firstItem = items.body[0];
-      const response = await request(app).delete(
-        `/user/wishlist/${firstItem._id}`
-      );
+      const firstItem = items.body[0]._id;
+      const response = await request(app).delete(`/user/wishlist/${firstItem}`);
       expect(response.status).toEqual(401);
     });
   });
