@@ -1,9 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 import "./NavBar.css";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import UserContext from "../../contexts/UserContext";
 
 function NavBar() {
   const [click, setClick] = useState(false);
@@ -12,6 +13,8 @@ function NavBar() {
   const closeMobileMenu = () => setClick(false);
 
   const history = useHistory();
+
+  const { user, setUser } = useContext(UserContext);
 
   const logUserOut = () => {
     console.log(`${process.env.REACT_APP_API_URL}/user/logout`);
@@ -25,6 +28,7 @@ function NavBar() {
       )
       .then((response) => {
         console.log(response);
+        setUser(null);
         alert("Log out success!");
         history.push("/");
       })
@@ -49,43 +53,50 @@ function NavBar() {
           {click ? <FaTimes /> : <FaBars />}
         </div>
         <ul className={click ? "nav-menu active" : "nav-menu"}>
-          <li className="nav-item">
-            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-              Home
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/wishlist"
-              className="nav-links"
-              onClick={closeMobileMenu}
-            >
-              Wishlist
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/sign-up"
-              className="nav-links sign-up"
-              onClick={closeMobileMenu}
-            >
-              Sign Up
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              to="/login"
-              className="nav-links sign-in"
-              onClick={closeMobileMenu}
-            >
-              Login
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link to="#" className="nav-links logout" onClick={logUserOut}>
-              Logout
-            </Link>
-          </li>
+          {user ? (
+            <>
+              <li className="nav-item">
+                <Link
+                  to="/wishlist"
+                  className="nav-links"
+                  onClick={closeMobileMenu}
+                >
+                  Wishlist
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="#" className="nav-links logout" onClick={logUserOut}>
+                  Logout
+                </Link>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="nav-item">
+                <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/sign-up"
+                  className="nav-links sign-up"
+                  onClick={closeMobileMenu}
+                >
+                  Sign Up
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  to="/login"
+                  className="nav-links sign-in"
+                  onClick={closeMobileMenu}
+                >
+                  Login
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </div>

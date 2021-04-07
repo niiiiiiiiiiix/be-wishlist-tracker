@@ -1,14 +1,18 @@
 import "../SignInUp.css";
-import React from "react";
+import { React, useContext } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import UserContext from "../../../contexts/UserContext";
 
 const SignInForm = () => {
   const history = useHistory();
   // console.log(process.env.REACT_APP_API_URL);
   // console.log(process.env);
+
+  const { setUser } = useContext(UserContext);
+
   return (
     <Formik
       initialValues={{
@@ -27,7 +31,10 @@ const SignInForm = () => {
             withCredentials: true,
           })
           .then((response) => {
-            console.log(response);
+            // console.log(response);
+            // console.log(response.data);
+            // console.log(JSON.parse(response.config.data));
+            setUser(response.data.user);
             alert("Log in success!");
             history.push("/wishlist");
           })

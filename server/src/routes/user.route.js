@@ -59,7 +59,9 @@ user.post("/login", async (req, res, next) => {
       sameSite: "none", // comment out when testing locally
     });
 
-    res.send("You are now logged in!");
+    res.json({ message: "You are now logged in!", user: username });
+
+    // res.send("You are now logged in!");
   } catch (err) {
     // console.log(err);
     if (err.message === "Login failed") {
@@ -71,6 +73,11 @@ user.post("/login", async (req, res, next) => {
 
 user.post("/logout", protectRoute, (req, res) => {
   res.clearCookie("token").send("You are now logged out!");
+});
+
+// decodes user cookie to send to front end
+user.get("/me", protectRoute, async (req, res) => {
+  res.status(200).send(req.user);
 });
 
 module.exports = user;
