@@ -30,7 +30,8 @@ export const useCurrentUser = () => {
         }
       })
       .then((user) => setUser(user))
-      .catch(console.error);
+      .catch((error) => error);
+    // .catch(console.error);
   }, []);
 
   return { user, setUser };
