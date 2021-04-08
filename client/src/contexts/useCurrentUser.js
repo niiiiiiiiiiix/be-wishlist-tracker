@@ -10,15 +10,15 @@ export const useCurrentUser = () => {
     const requestUrl = `${process.env.REACT_APP_API_URL}/user/me`;
 
     const requestOptions = {
-      // method: "GET",
+      url: requestUrl,
+      method: "GET",
       withCredentials: true,
       headers: {
         "Content-Type": "application/json",
       },
     };
 
-    axios
-      .get(requestUrl, requestOptions)
+    axios(requestOptions)
       .then((response) => {
         console.log(response);
         console.log(response.data);
