@@ -16,16 +16,17 @@ function NavBar() {
 
   const { user, setUser } = useContext(UserContext);
 
+  const logoutUrl = `${process.env.REACT_APP_API_URL}/user/logout`;
+  const logoutOptions = {
+    url: logoutUrl,
+    method: "POST",
+    withCredentials: true,
+    // data: "need some data here if u want config",
+  };
+
   const logUserOut = () => {
     console.log(`${process.env.REACT_APP_API_URL}/user/logout`);
-    axios
-      .post(
-        `${process.env.REACT_APP_API_URL}/user/logout`,
-        "need some data here if u want config",
-        {
-          withCredentials: true,
-        }
-      )
+    axios(logoutOptions)
       .then((response) => {
         console.log(response);
         setUser(null);
