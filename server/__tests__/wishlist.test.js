@@ -74,7 +74,7 @@ describe("Wishlist", () => {
       const response = await request(app).post("/user/wishlist").send(body);
       expect(response.status).toEqual(401);
     });
-  }, 15000);
+  });
 
   describe("GET /user/wishlist/", () => {
     it("(authorised) should return all items in wishlist", async () => {
@@ -87,7 +87,7 @@ describe("Wishlist", () => {
       const response = await request(app).get("/user/wishlist");
       expect(response.status).toEqual(401);
     });
-  }, 15000);
+  });
 
   describe("DELETE /user/wishlist/:id", () => {
     it("(authorised) should delete particular item with id", async () => {
@@ -109,5 +109,5 @@ describe("Wishlist", () => {
       const response = await request(app).delete(`/user/wishlist/${firstItem}`);
       expect(response.status).toEqual(401);
     });
-  }, 15000);
+  });
 });
