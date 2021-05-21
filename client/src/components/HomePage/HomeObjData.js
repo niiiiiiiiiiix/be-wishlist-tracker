@@ -8,7 +8,7 @@ export const HomeObjOne = {
     "ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a cras semper auctor neque vitae tempus quam pellentesque nec nam",
   buttonLabel: "Learn more",
   imgStart: "",
-  img: "images/svg-1.svg",
+  img: "images/presents.svg",
   alt: "",
 };
 

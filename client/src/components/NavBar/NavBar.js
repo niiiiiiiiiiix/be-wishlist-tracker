@@ -48,7 +48,7 @@ function NavBar() {
             src={process.env.PUBLIC_URL + "/images/sun.svg"}
             alt=""
           />
-          SUNNY
+          Pastel
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
