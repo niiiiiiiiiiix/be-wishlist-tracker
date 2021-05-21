@@ -18,7 +18,7 @@ export const HomeObjTwo = {
   description:
     "with compatibility across multiple top fashion brands and blogshops, it is as easy as ABC to start",
   imgStart: "start",
-  img: "images/bag.svg",
+  img: "images/online-shop.svg",
   alt: "",
 };
 
