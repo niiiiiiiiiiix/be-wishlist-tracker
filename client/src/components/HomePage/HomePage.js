@@ -1,6 +1,6 @@
 import React from "react";
 import HeroSection from "./HeroSection";
-import { HomeObjOne, HomeObjTwo } from "./HomeObjData";
+import { HomeObjOne, HomeObjTwo, HomeObjThree } from "./HomeObjData";
 import "./HomePage.css";
 
 const HomePage = () => {
@@ -8,6 +8,7 @@ const HomePage = () => {
     <div className="homepage-vertical-space">
       <HeroSection {...HomeObjOne} />
       <HeroSection {...HomeObjTwo} />
+      <HeroSection {...HomeObjThree} />
     </div>
   );
 };

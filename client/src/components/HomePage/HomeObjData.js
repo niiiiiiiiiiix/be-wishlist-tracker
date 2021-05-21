@@ -2,10 +2,9 @@ export const HomeObjOne = {
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
-  headline: "For the bargain shopper in us",
+  headline: "for the bargain shoppers in us",
   description:
-    "Pastel is a wishlist aggregator aimed at simplifying your shopping experience by merging all your individual wishlists into one single site",
-  buttonLabel: "Learn more",
+    "by keeping all your online wishlists on one single site, we hope to simplify your budget shopping experience",
   imgStart: "",
   img: "images/presents.svg",
   alt: "",
@@ -15,12 +14,22 @@ export const HomeObjTwo = {
   lightBg: false,
   lightText: true,
   lightTextDesc: true,
-  topLine: "Lorem Ipsum",
-  headline: "Dmus mauris vitae ultricies leo integer malesuada",
+  headline: "shop to your heart's desire",
   description:
-    "ipsum nunc aliquet bibendum enim facilisis gravida neque convallis a cras semper auctor neque vitae tempus quam pellentesque nec nam",
-  buttonLabel: "Sign up now!",
+    "with compatibility across multiple top fashion brands and blogshops, it is as easy as ABC to start",
   imgStart: "start",
-  img: "images/svg-2.svg",
+  img: "images/Cotton_On_logo.png",
+  alt: "",
+};
+
+export const HomeObjThree = {
+  lightBg: true,
+  lightText: false,
+  lightTextDesc: false,
+  headline: "start today at zero friggin' cost",
+  description:
+    "as bargain shoppers ourselves, we understand that budget is at the top of our minds and so we're providing this service for free",
+  imgStart: "",
+  img: "images/presents.svg",
   alt: "",
 };
