@@ -1,3 +1,4 @@
 node_modules
 .env
 src/routes/wishlistWithPuppeteerPost.route.js
+src/middleware/correctUser.js
