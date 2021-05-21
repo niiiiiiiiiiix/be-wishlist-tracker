@@ -26,9 +26,9 @@ export const HomeObjThree = {
   lightBg: true,
   lightText: false,
   lightTextDesc: false,
-  headline: "start today at zero friggin' cost",
+  headline: "start today at absolutely zero cost",
   description:
-    "as bargain shoppers ourselves, we understand that budget is at the top of our minds and so we're providing this service for free",
+    "as bargain shoppers ourselves, we understand your concerns and so we're providing this service for free",
   imgStart: "",
   img: "images/tag.svg",
   alt: "",

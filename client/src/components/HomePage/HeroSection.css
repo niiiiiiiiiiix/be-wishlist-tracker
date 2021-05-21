@@ -2,6 +2,20 @@
   background-color: #fff7f7;
 }
 
+.hero-top-level-container::after {
+  content: "";
+  width: 80%;
+  height: 1px;
+  background: #e4e4e4;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  left: 10%;
+}
+.hero-top-level-container:last-child::after {
+  height: 0;
+}
+
 .hero-row-container {
   margin: 0 6%;
   background-color: #fcf2f2;
@@ -32,6 +46,7 @@
   .content-col {
     max-width: 98%;
     flex-basis: 100%;
+    padding: 6% 3%;
   }
 }
 
@@ -43,6 +58,7 @@
 @media screen and (max-width: 767px) {
   .hero-text-wrapper {
     padding-bottom: 20px;
+    text-align: center;
   }
 }
 
@@ -57,6 +73,7 @@
 @media screen and (max-width: 767px) {
   .heading {
     margin-bottom: 5%;
+    font-size: 38px;
   }
 }
 
@@ -69,7 +86,7 @@
 @media screen and (max-width: 767px) {
   .description {
     max-width: 100%;
-    margin-bottom: 5%;
+    font-size: 18px;
   }
 }
 
@@ -100,5 +117,6 @@
     max-width: 555px;
     display: flex;
     justify-content: center;
+    padding-bottom: 10%;
   }
 }
