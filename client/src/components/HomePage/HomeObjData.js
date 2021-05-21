@@ -18,7 +18,7 @@ export const HomeObjTwo = {
   description:
     "with compatibility across multiple top fashion brands and blogshops, it is as easy as ABC to start",
   imgStart: "start",
-  img: "images/Cotton_On_logo.png",
+  img: "images/bag.svg",
   alt: "",
 };
 
@@ -30,6 +30,6 @@ export const HomeObjThree = {
   description:
     "as bargain shoppers ourselves, we understand that budget is at the top of our minds and so we're providing this service for free",
   imgStart: "",
-  img: "images/presents.svg",
+  img: "images/tag.svg",
   alt: "",
 };

@@ -6,6 +6,7 @@ import Wishlist from "./components/Wishlist/Wishlist";
 import HomePage from "./components/HomePage/HomePage";
 import SignUp from "./components/AccMgmt/SignUp/SignUpForm";
 import Login from "./components/AccMgmt/SignIn/SignInForm";
+import Footer from "./components/Footer/Footer";
 import UserContext from "./contexts/UserContext";
 import { useCurrentUser } from "./contexts/useCurrentUser";
 
@@ -24,6 +25,9 @@ function App() {
           <Route path="/sign-up" exact component={SignUp} />
           <Route path="/login" exact component={Login} />
         </Switch>
+        <footer>
+          <Footer />
+        </footer>
       </BrowserRouter>
     </UserContext.Provider>
   );

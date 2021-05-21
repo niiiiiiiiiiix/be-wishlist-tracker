@@ -1,0 +1,23 @@
+.footer {
+  background-color: #fff7f7;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  padding: 2% 7%;
+  color: #3d3d3d;
+}
+
+.footer-top {
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid #3d3d3d;
+  margin-bottom: 7px;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px;
+  padding-bottom: 8px;
+  border-bottom: 1px;
+  margin-bottom: 7px;
+}
