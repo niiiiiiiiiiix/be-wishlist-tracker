@@ -4,8 +4,8 @@ import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
 import Wishlist from "./components/Wishlist/Wishlist";
 import HomePage from "./components/HomePage/HomePage";
-import SignUp from "./components/SignUpIn/SignUp/SignUpForm";
-import Login from "./components/SignUpIn/SignIn/SignInForm";
+import SignUp from "./components/AccMgmt/SignUp/SignUpForm";
+import Login from "./components/AccMgmt/SignIn/SignInForm";
 import UserContext from "./contexts/UserContext";
 import { useCurrentUser } from "./contexts/useCurrentUser";
 

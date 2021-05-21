@@ -48,7 +48,7 @@ function NavBar() {
             src={process.env.PUBLIC_URL + "/images/sun.svg"}
             alt=""
           />
-          Pastel
+          pastel
         </Link>
         <div className="menu-icon" onClick={handleClick}>
           {click ? <FaTimes /> : <FaBars />}
@@ -62,12 +62,12 @@ function NavBar() {
                   className="nav-links"
                   onClick={closeMobileMenu}
                 >
-                  Wishlist
+                  wishlist
                 </Link>
               </li>
               <li className="nav-item">
                 <Link to="#" className="nav-links logout" onClick={logUserOut}>
-                  Logout
+                  logout
                 </Link>
               </li>
             </>
@@ -75,7 +75,7 @@ function NavBar() {
             <>
               <li className="nav-item">
                 <Link to="/" className="nav-links" onClick={closeMobileMenu}>
-                  Home
+                  home
                 </Link>
               </li>
               <li className="nav-item">
@@ -84,7 +84,7 @@ function NavBar() {
                   className="nav-links sign-up"
                   onClick={closeMobileMenu}
                 >
-                  Sign Up
+                  sign up
                 </Link>
               </li>
               <li className="nav-item">
@@ -93,7 +93,7 @@ function NavBar() {
                   className="nav-links sign-in"
                   onClick={closeMobileMenu}
                 >
-                  Login
+                  login
                 </Link>
               </li>
             </>

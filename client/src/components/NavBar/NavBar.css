@@ -1,5 +1,5 @@
 .navbar {
-  background: #aacfcf;
+  background: #fff7f7;
   height: 80px;
   display: flex;
   justify-content: center;
@@ -32,14 +32,13 @@
 }
 
 .navbar-logo {
-  font-family: "Kaushan Script", cursive;
-  color: #fff7f7;
+  font-family: "Newsreader", serif;
+  color: #000;
   justify-self: start;
   cursor: pointer;
   text-decoration: none;
   font-size: 42px;
-  font-weight: 600;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   display: flex;
   align-items: center;
 }
@@ -56,14 +55,14 @@
 }
 
 .nav-links {
-  font-family: "Open Sans", sans-serif;
-  color: #fff7f7;
+  font-family: "Poppins", sans-serif;
+  color: #3d3d3d;
   display: flex;
   align-items: center;
   text-decoration: none;
   padding: 8px 16px;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 400;
   letter-spacing: 0.5px;
   height: 100%;
   border-radius: 8px;
@@ -71,8 +70,9 @@
 
 .nav-links:hover {
   cursor: pointer;
-  background-color: rgb(39, 143, 255);
-  transition: all 0.4s ease-out;
+  /* background-color: rgb(39, 143, 255); */
+  font-weight: 600;
+  transition: all 0.1s ease-in-out;
 }
 
 .fa-bars {
