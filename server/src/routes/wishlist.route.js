@@ -19,55 +19,55 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
   try {
     let results = [];
     let SCRAPING_URL = req.body.url;
-
     const response = await axios
       .get(SCRAPING_URL)
       .then((res) => res.data)
       .catch((err) => err);
     // .catch((err) => console.log(err));
-
     const $ = cheerio.load(response);
-
     let date = new Date();
     let lastUpdated = date.toLocaleString("en-GB", dateFormat);
-
     let productID = ObjectId();
     let productLink = SCRAPING_URL;
     let productName = $(".product-name").text();
-    console.log(productName);
-    if ($(".price-standard").text().trim() === "") {
-      let originalPrice = $(".price-sales").text().trim();
-      let salesPrice = "N/A";
-      results.push({
-        _id: productID,
-        productLink: productLink,
-        productName: productName,
-        originalPrice: originalPrice,
-        salesPrice: salesPrice,
-        lastUpdated: lastUpdated,
-      });
-    } else {
-      let originalPrice = $(".price-standard").text().trim();
-      let salesPrice = $(".price-sales").text().trim();
-      results.push({
-        _id: productID,
-        productLink: productLink,
-        productName: productName,
-        originalPrice: originalPrice,
-        salesPrice: salesPrice,
-        lastUpdated: lastUpdated,
-      });
-    }
 
-    await User.updateOne(
-      { username: req.user.username },
-      {
-        $addToSet: {
-          wishlist: results,
-        },
+    if ($(".bv-rating-summary").text() !== "") {
+      if ($(".price-standard").text().trim() === "") {
+        let originalPrice = $(".price-sales").text().trim();
+        let salesPrice = "N/A";
+        results.push({
+          _id: productID,
+          productLink: productLink,
+          productName: productName,
+          originalPrice: originalPrice,
+          salesPrice: salesPrice,
+          lastUpdated: lastUpdated,
+        });
+      } else {
+        let originalPrice = $(".price-standard").text().trim();
+        let salesPrice = $(".price-sales").text().trim();
+        results.push({
+          _id: productID,
+          productLink: productLink,
+          productName: productName,
+          originalPrice: originalPrice,
+          salesPrice: salesPrice,
+          lastUpdated: lastUpdated,
+        });
       }
-    );
-    res.status(201).json(results);
+
+      await User.updateOne(
+        { username: req.user.username },
+        {
+          $addToSet: {
+            wishlist: results,
+          },
+        }
+      );
+      res.status(201).json(results);
+    } else {
+      throw "Invalid URL";
+    }
   } catch (err) {
     err.statusCode = 400;
     next(err);
