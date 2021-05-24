@@ -45,14 +45,16 @@ const Wishlist = () => {
         }
       )
       .then((response) => {
-        setIsLoading(false);
         setWishlist([...wishlist, ...response.data]);
         setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
         setItemUrl("");
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
         alert("Invalid URL");
+        setItemUrl("");
+        setIsLoading(false);
       });
   }
 
@@ -78,9 +80,9 @@ const Wishlist = () => {
         withCredentials: true,
       })
       .then((response) => {
-        setIsLoading(false);
         setWishlist(response.data);
         setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.log(error);
