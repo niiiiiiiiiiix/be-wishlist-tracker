@@ -34,6 +34,7 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
     let productID = ObjectId();
     let productLink = SCRAPING_URL;
     let productName = $(".product-name").text();
+    console.log(productName);
     if ($(".price-standard").text().trim() === "") {
       let originalPrice = $(".price-sales").text().trim();
       let salesPrice = "N/A";

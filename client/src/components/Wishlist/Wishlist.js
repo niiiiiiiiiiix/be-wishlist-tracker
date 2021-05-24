@@ -11,6 +11,7 @@ const Wishlist = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
   const [lastDateUpdated, setLastDateUpdated] = useState("");
+  const [itemUrl, setItemUrl] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -43,9 +44,11 @@ const Wishlist = () => {
           withCredentials: true,
         }
       )
-      .then((item) => {
+      .then((response) => {
         setIsLoading(false);
-        setWishlist([...wishlist, ...item.data]);
+        setWishlist([...wishlist, ...response.data]);
+        setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
+        setItemUrl("");
       })
       .catch((error) => {
         console.log(error);
@@ -55,9 +58,7 @@ const Wishlist = () => {
 
   function removeFromWishlist(id) {
     // useful link = https://www.robinwieruch.de/react-remove-item-from-list
-    // console.log(id);
     const newWishlist = wishlist.filter((item) => item._id !== id);
-    // console.log(newWishlist);
     axios
       .delete(`${process.env.REACT_APP_API_URL}/user/wishlist/${id}`, {
         withCredentials: true,
@@ -79,7 +80,7 @@ const Wishlist = () => {
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
-        // console.log(response.data);
+        setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
       })
       .catch((error) => {
         console.log(error);
@@ -94,9 +95,11 @@ const Wishlist = () => {
             <input
               type="text"
               ref={urlInput}
-              placeholder="  enter product url here"
+              placeholder="enter product url here"
               className="url-input"
-            ></input>
+              value={itemUrl}
+              onChange={(e) => setItemUrl(e.target.value)}
+            />
           </div>
           <div className="action-container">
             <button className="ac-button" onClick={addToWishlist}>
