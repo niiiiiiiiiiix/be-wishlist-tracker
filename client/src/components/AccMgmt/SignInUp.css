@@ -5,9 +5,9 @@
 .form {
   position: absolute;
   margin-top: 80px;
-  padding-top: 80px;
+  padding-top: 20px;
   width: 100%;
-  height: 100%;
+  height: 90vh;
   background-color: #faf9f9;
   display: flex;
   justify-content: center;
@@ -15,8 +15,9 @@
 
 .sub-form {
   width: 55%;
-  height: 60%;
+  height: 75%;
   margin-top: 2%;
+  padding: 4% 0;
   border: 0.5px solid #e6e6e6;
   border-radius: 50px;
   display: flex;
@@ -27,7 +28,7 @@
 }
 
 .sf-login {
-  height: 45%;
+  height: 50%;
 }
 
 .all-form-inputs {
@@ -138,7 +139,7 @@
   font-weight: 600;
 }
 
-.form-input-login:hover a {
+.form-input-login a:hover {
   text-decoration: underline;
 }
 
