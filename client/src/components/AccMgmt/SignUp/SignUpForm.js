@@ -44,7 +44,7 @@ const SignUpForm = () => {
           <div className="sub-form">
             <div className="all-form-inputs">
               <label htmlFor="username" className="form-label">
-                Username:
+                username:
               </label>
               <Field
                 name="username"
@@ -53,7 +53,7 @@ const SignUpForm = () => {
                   "form-input" +
                   (errors.username && touched.username ? " is-invalid" : "")
                 }
-                placeholder="Enter your username"
+                placeholder="enter a username"
               />
               <ErrorMessage
                 name="username"
@@ -63,7 +63,7 @@ const SignUpForm = () => {
             </div>
             <div className="all-form-inputs">
               <label htmlFor="email" className="form-label">
-                Email:
+                email:
               </label>
               <Field
                 name="email"
@@ -72,7 +72,7 @@ const SignUpForm = () => {
                   "form-input" +
                   (errors.email && touched.email ? " is-invalid" : "")
                 }
-                placeholder="Enter your email"
+                placeholder="enter your email"
               />
               <ErrorMessage
                 name="email"
@@ -82,7 +82,7 @@ const SignUpForm = () => {
             </div>
             <div className="all-form-inputs">
               <label htmlFor="password" className="form-label">
-                Password:
+                password:
               </label>
               <Field
                 name="password"
@@ -91,7 +91,7 @@ const SignUpForm = () => {
                   "form-input" +
                   (errors.password && touched.password ? " is-invalid" : "")
                 }
-                placeholder="Enter your password"
+                placeholder="enter your password"
               />
               <ErrorMessage
                 name="password"
@@ -101,7 +101,7 @@ const SignUpForm = () => {
             </div>
             <div className="all-form-inputs">
               <label htmlFor="confirmPassword" className="form-label">
-                Confirm Password:
+                confirm password:
               </label>
               <Field
                 name="confirmPassword"
@@ -112,7 +112,7 @@ const SignUpForm = () => {
                     ? " is-invalid"
                     : "")
                 }
-                placeholder="Re-enter your password"
+                placeholder="re-enter your password"
               />
               <ErrorMessage
                 name="confirmPassword"
@@ -121,10 +121,10 @@ const SignUpForm = () => {
               />
             </div>
             <button type="submit" className="form-input-btn">
-              Sign Up
+              sign up
             </button>
             <span className="form-input-login">
-              Already have an account? Sign in <a href="/sign-in">here</a>
+              already have an account? login <a href="/login">here</a>
             </span>
           </div>
         </Form>

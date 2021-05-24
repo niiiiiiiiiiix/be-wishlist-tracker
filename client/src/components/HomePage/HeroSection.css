@@ -1,24 +1,10 @@
 .hero-top-level-container {
-  background-color: #fff7f7;
-}
-
-.hero-top-level-container::after {
-  content: "";
-  width: 80%;
-  height: 1px;
-  background: #e4e4e4;
-  display: flex;
-  justify-content: center;
-  position: relative;
-  left: 10%;
-}
-.hero-top-level-container:last-child::after {
-  height: 0;
+  background-color: #faf9f9;
 }
 
 .hero-row-container {
   margin: 0 6%;
-  background-color: #fcf2f2;
+  
 }
 
 @media screen and (max-width: 767px) {

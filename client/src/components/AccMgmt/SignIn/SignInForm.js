@@ -45,10 +45,10 @@ const SignInForm = () => {
     >
       {({ errors, status, touched }) => (
         <Form className="form">
-          <div className="sub-form">
+          <div className="sub-form sf-login">
             <div className="all-form-inputs">
               <label htmlFor="username" className="form-label">
-                Username:
+                username:
               </label>
               <Field
                 name="username"
@@ -57,7 +57,7 @@ const SignInForm = () => {
                   "form-input" +
                   (errors.username && touched.username ? " is-invalid" : "")
                 }
-                placeholder="Enter your username"
+                placeholder="enter your username"
               />
               <ErrorMessage
                 name="username"
@@ -67,7 +67,7 @@ const SignInForm = () => {
             </div>
             <div className="all-form-inputs">
               <label htmlFor="password" className="form-label">
-                Password:
+                password:
               </label>
               <Field
                 name="password"
@@ -76,7 +76,7 @@ const SignInForm = () => {
                   "form-input" +
                   (errors.password && touched.password ? " is-invalid" : "")
                 }
-                placeholder="Enter your password"
+                placeholder="enter your password"
               />
               <ErrorMessage
                 name="password"
@@ -85,10 +85,10 @@ const SignInForm = () => {
               />
             </div>
             <button type="submit" className="form-input-btn">
-              Sign In
+              sign in
             </button>
             <span className="form-input-login">
-              Don't have an account? Sign up <a href="/sign-up">here</a>
+              don't have an account? sign up <a href="/sign-up">here</a>
             </span>
           </div>
         </Form>
