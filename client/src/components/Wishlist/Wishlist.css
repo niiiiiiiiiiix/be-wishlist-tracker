@@ -1,27 +1,29 @@
-.bodyy {
+.wishlist-container {
   margin-top: 80px;
-  background-color: #152238;
+  background-color: #faf9f9;
+  min-height: 500px;
 }
 
-.demo-container {
+.wishlist-body {
   padding: 1rem;
   padding-top: 0;
   margin-top: 1rem;
   height: 100vh;
-}
-
-.wishlist-h1 {
-  background-color: #fff;
-  border: 1px solid black;
-  margin-top: 21.44px;
-  margin-bottom: 21.44px;
+  margin: 0 2%;
 }
 
 .action-bar {
-  background-color: #fff;
-  border: 1px solid #152238;
-  margin-top: 21.44px;
+  background-color: #faf9f9;
+  padding-top: 3%;
   margin-bottom: 21.44px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.url-input {
+  width: 50vw;
+  height: 50px;
+  font-size: 16px;
 }
 
 .wishlist {
@@ -29,31 +31,51 @@
   border: 1px solid #152238;
 }
 
+.ac-button {
+  padding: 8px 16px;
+  font-size: 22px;
+  letter-spacing: 0.5px;
+  border: 0.5px solid #3d3d3d;
+  border-radius: 8px;
+  background-color: #fcf2f2;
+  margin-left: 16px;
+}
+
+.ac-button:hover {
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.1s ease-in-out;
+}
+
+.wishlist-status {
+  display: flex;
+  justify-content: space-between;
+  height: 30px;
+}
+
 .table-content {
   border-collapse: collapse;
-  /* margin-top: 25px; */
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  font-size: 0.9em;
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
   width: 100%;
 }
 
 .table-content thead :first-child {
-  width: 40%;
+  width: 50%;
 }
 .table-content thead :nth-child(2) {
-  width: 15%;
+  width: 20%;
 }
 .table-content thead :nth-child(3) {
-  width: 15%;
+  width: 20%;
 }
 .table-content thead :nth-child(4) {
-  width: 20%;
+  width: 10%;
 }
 
 .table-content thead tr {
-  background-color: #152238;
-  color: #f5f5f5;
+  background-color: #fcf2f2;
+  color: #3d3d3d;
   text-align: left;
   font-weight: bold;
 }
@@ -66,30 +88,13 @@ th {
 table,
 th,
 td {
-  border: 1px solid black;
+  border: 0.5px solid #3d3d3d;
 }
 
 .delete-button:hover {
   cursor: pointer;
 }
 
-.action-bar {
-  display: flex;
-  list-style: none;
-  background-color: #152238;
-}
-
-.action-bar-text {
-  padding: 8px 16px;
-  font-size: 24px;
-  letter-spacing: 0.5px;
-  border: 1px solid black;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  margin-right: 16px;
-}
-
-.action-bar-text:hover {
-  background-color: cadetblue;
-  cursor: pointer;
+a:visited {
+  color: #3d3d3d;
 }

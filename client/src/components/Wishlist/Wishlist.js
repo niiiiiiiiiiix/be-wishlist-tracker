@@ -10,6 +10,7 @@ import Loader from "./Loader";
 const Wishlist = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
+  const [lastDateUpdated, setLastDateUpdated] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
@@ -20,7 +21,7 @@ const Wishlist = () => {
       .then((response) => {
         setIsLoading(false);
         setWishlist(response.data);
-        // console.log(response.data);
+        setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
       })
 
       .catch((error) => {
@@ -86,40 +87,40 @@ const Wishlist = () => {
   }
 
   return (
-    <div className="bodyy">
-      <div className="demo-container">
-        <h1 className="wishlist-h1">This is your demo page</h1>
-        <div>
-          <ul className="action-bar">
+    <div className="wishlist-container">
+      <div className="wishlist-body">
+        <div className="action-bar">
+          <div className="url-input-container">
             <input
               type="text"
               ref={urlInput}
-              placeholder="Paste/type url here"
+              placeholder="  enter product url here"
+              className="url-input"
             ></input>
-            <button
-              className="add-wishlist-button action-bar-text"
-              onClick={addToWishlist}
-            >
-              Add item
+          </div>
+          <div className="action-container">
+            <button className="ac-button" onClick={addToWishlist}>
+              add item
             </button>
-            <button
-              className="refresh-button action-bar-text"
-              onClick={refreshWishlist}
-            >
-              Refresh wishlist
+            <button className="ac-button" onClick={refreshWishlist}>
+              refresh wishlist
             </button>
-          </ul>
+          </div>
         </div>
+
+        <div className="wishlist-status">
+          <div>{`last updated: ${lastDateUpdated}`}</div>
+          <div>{isLoading && <Loader />}</div>
+        </div>
+
         <div className="wishlist">
-          {isLoading && <Loader />}
           <table className="table-content">
             <thead>
               <tr>
-                <th>Product Name</th>
-                <th>Original Price</th>
-                <th>Sales Price</th>
-                <th>Last Updated</th>
-                <th>Delete</th>
+                <th>product name</th>
+                <th>original price</th>
+                <th>sales price</th>
+                <th>delete</th>
               </tr>
             </thead>
 
@@ -128,11 +129,16 @@ const Wishlist = () => {
                 return (
                   <tr key={item._id}>
                     <td>
-                      <a href={item.productLink}>{item.productName}</a>
+                      <a
+                        href={item.productLink}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {item.productName.toLowerCase()}
+                      </a>
                     </td>
                     <td>{item.originalPrice}</td>
                     <td>{item.salesPrice}</td>
-                    <td>{item.lastUpdated}</td>
                     <td>
                       <ImCross
                         onClick={() => removeFromWishlist(item._id)}
