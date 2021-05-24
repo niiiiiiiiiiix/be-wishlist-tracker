@@ -4,10 +4,10 @@ import "./Footer.css";
 function Footer() {
   return (
     <section className="footer">
-      <div class="footer-top">
+      <div className="footer-top">
         <p>All icons and images made by Freepik from www.flaticon.com</p>
       </div>
-      <div class="footer-bottom">
+      <div className="footer-bottom">
         <p>Copyright © 2021 niiiiiiiiiiix. All rights reserved.</p>
         <a
           href="https://github.com/niiiiiiiiiiix/wishlist-tracker"

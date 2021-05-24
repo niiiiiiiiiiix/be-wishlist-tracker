@@ -24,3 +24,4 @@ yarn-error.log*
 
 src/components/HomePage/oldHeroSection.js
 src/components/HomePage/oldHomeObjData.js
+src/components/NavBar/oldNavBar.js

@@ -15,9 +15,7 @@ function App() {
   return (
     <UserContext.Provider value={{ user, setUser }}>
       <BrowserRouter>
-        <header>
-          <NavBar />
-        </header>
+        <NavBar />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/wishlist" exact component={Wishlist} />

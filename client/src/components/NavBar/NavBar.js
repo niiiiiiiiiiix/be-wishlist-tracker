@@ -8,12 +8,19 @@ import UserContext from "../../contexts/UserContext";
 
 function NavBar() {
   const [click, setClick] = useState(false);
-
-  const handleClick = () => setClick(!click);
+  function handleClick() {
+    setClick(!click);
+  }
+  function FaIconChanger() {
+    if (click === false) {
+      return <FaBars />;
+    } else {
+      return <FaTimes />;
+    }
+  }
   const closeMobileMenu = () => setClick(false);
 
   const history = useHistory();
-
   const { user, setUser } = useContext(UserContext);
 
   const logoutUrl = `${process.env.REACT_APP_API_URL}/user/logout`;
@@ -51,7 +58,7 @@ function NavBar() {
           pastel
         </Link>
         <div className="menu-icon" onClick={handleClick}>
-          {click ? <FaTimes /> : <FaBars />}
+          <FaIconChanger click={click} />
         </div>
         <ul className={click ? "nav-menu active" : "nav-menu"}>
           {user ? (
@@ -74,7 +81,11 @@ function NavBar() {
           ) : (
             <>
               <li className="nav-item">
-                <Link to="/" className="nav-links home" onClick={closeMobileMenu}>
+                <Link
+                  to="/"
+                  className="nav-links home"
+                  onClick={closeMobileMenu}
+                >
                   home
                 </Link>
               </li>
