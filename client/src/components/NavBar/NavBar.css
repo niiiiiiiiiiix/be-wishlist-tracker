@@ -76,12 +76,12 @@
 }
 
 .fa-bars {
-  color: #f5f5f5;
+  color: #3d3d3d;
 }
 
 .menu-icon {
   display: none;
-  color: #f5f5f5;
+  color: #3d3d3d;
 }
 
 @media (max-width: 767px) {
