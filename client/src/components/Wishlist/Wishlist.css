@@ -47,6 +47,14 @@
   transition: all 0.1s ease-in-out;
 }
 
+.add-item {
+  min-width: 145px;
+}
+
+.refresh-wishlist {
+  min-width: 215px;
+}
+
 .wishlist-status {
   display: flex;
   justify-content: space-between;
