@@ -104,10 +104,10 @@ const Wishlist = () => {
             />
           </div>
           <div className="action-container">
-            <button className="ac-button" onClick={addToWishlist}>
+            <button className="ac-button add-item" onClick={addToWishlist}>
               add item
             </button>
-            <button className="ac-button" onClick={refreshWishlist}>
+            <button className="ac-button refresh-wishlist" onClick={refreshWishlist}>
               refresh wishlist
             </button>
           </div>
