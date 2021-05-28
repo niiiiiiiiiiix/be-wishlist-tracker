@@ -73,9 +73,9 @@ const Wishlist = () => {
       });
   }
 
-  function refreshWishlist() {
+  async function refreshWishlist() {
     setIsLoading(true);
-    axios
+    await axios
       .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
         withCredentials: true,
       })
@@ -107,7 +107,10 @@ const Wishlist = () => {
             <button className="ac-button add-item" onClick={addToWishlist}>
               add item
             </button>
-            <button className="ac-button refresh-wishlist" onClick={refreshWishlist}>
+            <button
+              className="ac-button refresh-wishlist"
+              onClick={refreshWishlist}
+            >
               refresh wishlist
             </button>
           </div>
