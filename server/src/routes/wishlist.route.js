@@ -131,7 +131,8 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
       const $ = cheerio.load(response);
 
-      let date = new Date();
+      // let date = new Date();
+      let date = new Date(Date.now() + 8 * 60 * 60 * 1000);
       let lastUpdated = date.toLocaleString("en-GB", dateFormat);
 
       let productLink = SCRAPING_URL;
