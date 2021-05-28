@@ -24,7 +24,6 @@ const Wishlist = () => {
         setWishlist(response.data);
         setLastDateUpdated(response.data[response.data.length - 1].lastUpdated);
       })
-
       .catch((error) => {
         console.log(error);
       });

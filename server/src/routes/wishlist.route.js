@@ -23,7 +23,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
       .get(SCRAPING_URL)
       .then((res) => res.data)
       .catch((err) => err);
-    // .catch((err) => console.log(err));
     const $ = cheerio.load(response);
     let date = new Date(Date.now() + 8 * 60 * 60 * 1000);
     let lastUpdated = date.toLocaleString("en-GB", dateFormat);
@@ -31,7 +30,9 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
     let productLink = SCRAPING_URL;
     let productName = $(".product-name").text();
 
-    if ($(".bv-rating-summary").text() !== "") {
+    if ($(".bv-rating-summary").text() === "") {
+      throw "Invalid URL";
+    } else {
       if ($(".price-standard").text().trim() === "") {
         let originalPrice = $(".price-sales").text().trim();
         let salesPrice = "N/A";
@@ -65,8 +66,6 @@ wishlist.post("/", protectRoute, async (req, res, next) => {
         }
       );
       res.status(201).json(results);
-    } else {
-      throw "Invalid URL";
     }
   } catch (err) {
     err.statusCode = 400;
@@ -97,7 +96,8 @@ wishlist.delete("/:id", protectRoute, async (req, res, next) => {
 });
 
 wishlist.get("/", protectRoute, async (req, res, next) => {
-  let aggregateArray = [
+  console.log(Date.now());
+  let aggregateArray = await [
     {
       $match: {
         username: req.user.username,
@@ -117,6 +117,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       },
     },
   ];
+  console.log(Date.now());
 
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
@@ -159,6 +160,7 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         });
       }
     }
+    console.log(Date.now());
 
     await User.updateOne(
       { username: req.user.username },
@@ -170,7 +172,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
     );
 
     const updatedWishlist = await User.aggregate(aggregateArray);
-    // console.log(updatedWishlist);
     res.status(200).json(updatedWishlist);
   } catch (err) {
     next(err);
