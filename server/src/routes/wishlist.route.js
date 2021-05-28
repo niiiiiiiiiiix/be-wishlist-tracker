@@ -10,9 +10,9 @@ let dateFormat = {
   day: "2-digit",
   month: "short",
   year: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  second: "2-digit",
+  hour: "numeric",
+  minute: "numeric",
+  // second: "2-digit",
 };
 
 wishlist.post("/", protectRoute, async (req, res, next) => {
@@ -96,7 +96,6 @@ wishlist.delete("/:id", protectRoute, async (req, res, next) => {
 });
 
 wishlist.get("/", protectRoute, async (req, res, next) => {
-  console.log(Date.now());
   let aggregateArray = await [
     {
       $match: {
@@ -117,14 +116,12 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
       },
     },
   ];
-  console.log(Date.now());
 
   try {
     const wishlistItems = await User.aggregate(aggregateArray);
     let results = [];
     for (let i = 0; i < wishlistItems.length; i++) {
       let SCRAPING_URL = wishlistItems[i].productLink;
-
       const response = await axios
         .get(SCRAPING_URL)
         .then((res) => res.data)
@@ -132,9 +129,9 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
 
       const $ = cheerio.load(response);
 
-      // let date = new Date();
-      let date = new Date(Date.now() + 8 * 60 * 60 * 1000);
-      let lastUpdated = date.toLocaleString("en-GB", dateFormat);
+      let date = new Date();
+      // let date = new Date(Date.now() + 8 * 60 * 60 * 1000);
+      let lastUpdated = date.toLocaleString("en-SG", dateFormat);
 
       let productLink = SCRAPING_URL;
       let productName = $(".product-name").text();
@@ -160,7 +157,6 @@ wishlist.get("/", protectRoute, async (req, res, next) => {
         });
       }
     }
-    console.log(Date.now());
 
     await User.updateOne(
       { username: req.user.username },

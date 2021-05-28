@@ -8,9 +8,10 @@ import Loader from "./Loader";
 // const URL = "https://wishlist-tracker.herokuapp.com/user/wishlist";
 
 const Wishlist = () => {
+  const updateText = "updating...";
   const [isLoading, setIsLoading] = useState(false);
   const [wishlist, setWishlist] = useState([]);
-  const [lastDateUpdated, setLastDateUpdated] = useState("");
+  const [lastDateUpdated, setLastDateUpdated] = useState(updateText);
   const [itemUrl, setItemUrl] = useState("");
 
   useEffect(() => {
@@ -74,6 +75,7 @@ const Wishlist = () => {
 
   async function refreshWishlist() {
     setIsLoading(true);
+    setLastDateUpdated(updateText);
     await axios
       .get(`${process.env.REACT_APP_API_URL}/user/wishlist`, {
         withCredentials: true,

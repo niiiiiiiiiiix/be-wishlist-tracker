@@ -20,9 +20,6 @@ export const useCurrentUser = () => {
 
     axios(requestOptions)
       .then((response) => {
-        console.log(response);
-        console.log(response.data);
-        console.log(response.data.username);
         if (response.status === 200) {
           return response.data.username;
         } else {
@@ -31,7 +28,6 @@ export const useCurrentUser = () => {
       })
       .then((user) => setUser(user))
       .catch((error) => error);
-    // .catch(console.error);
   }, []);
 
   return { user, setUser };
